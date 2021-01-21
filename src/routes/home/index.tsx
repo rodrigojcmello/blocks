@@ -8,7 +8,7 @@ function Home(): ReactElement {
       <h1>Home</h1>
       <ul>
         <li>
-          <Link to="/page1">Page 1</Link>
+          <Link to="/button">Button</Link>
         </li>
         <li>
           <Link to="/page2">Page 2</Link>

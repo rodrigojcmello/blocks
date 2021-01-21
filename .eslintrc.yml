@@ -111,6 +111,8 @@ overrides:
       react/prop-types: off
       react/require-default-props: off
 
+      react/button-has-type: off
+
       # ------------------------------------------------------------------------
       # Tests
       # ------------------------------------------------------------------------

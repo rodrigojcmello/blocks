@@ -1,13 +1,27 @@
 import { ReactElement } from 'react';
-import style9 from 'style9';
+import style9 from 'style9-dynamic-value';
+import { createGlobalStyle } from 'styled-components';
+import wwwww from '../../json/windows-10-fluent';
 
-// Styles are created by calling style9.create
-const styles = style9.create({
-  blue: {
-    color: 'white',
-    backgroundColor: 'green',
+const x = wwwww?.button?.accent?.block?.base?.borderRadius;
+
+const z = {
+  block: {
+    color: '#d0a967',
+    backgroundColor: 'var(--primary)',
+    borderWidth: 0,
+    padding: 10,
   },
-});
+};
+
+const styles = style9.create(z);
+
+const themes = {
+  '.facebook': { '--primary': 'green' },
+  '.google': { '--primary': 'red' },
+};
+
+const GlobalStyle = createGlobalStyle(themes);
 
 interface ButtonProps {
   label: string;
@@ -21,10 +35,12 @@ function Button({
   type = 'button',
 }: ButtonProps): ReactElement {
   return (
-    // eslint-disable-next-line react/button-has-type
-    <button type={type} onClick={onClick} className={styles('blue')}>
-      {label}
-    </button>
+    <div className="google">
+      <GlobalStyle />
+      <button type={type} onClick={onClick} className={styles('block')}>
+        {label} 123
+      </button>
+    </div>
   );
 }
 

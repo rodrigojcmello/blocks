@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const Style9Plugin = require('style9/webpack');
+const Style9Plugin = require('style9-dynamic-value/webpack');
 
 module.exports = (env = { NODE_ENV: 'development' }) => {
   const prod = env.NODE_ENV === 'production';
