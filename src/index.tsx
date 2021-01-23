@@ -1,39 +1,66 @@
-import React, { ReactElement, StrictMode } from 'react';
+import { ChangeEvent, FC, StrictMode, useState } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import Home from './routes/home';
 import Button from './routes/button';
 import Page2 from './routes/page2';
 import NotFound from './routes/not-found';
-import theme from './theme-01.json';
+import WhiteUI, { Mode } from './components/Theme';
+import themeTwitter from './theme-twitter.json';
+import themeFacebook from './theme-facebook.json';
 
-const themeX: any = {};
-
-theme.themes.forEach((themeColors) => {
-  themeX[`.${themeColors.name}`] = {};
-  themeColors.light.primary.forEach((primary) => {
-    themeX[`.${themeColors.name}`][`--primary-${Object.keys(primary)}`] =
-      primary[Object.keys(primary)];
-  });
-
-  themeX[`.${themeColors.name}`]['@media (prefers-color-scheme: dark)'] = {};
-  themeColors.dark.primary.forEach((primary) => {
-    themeX[`.${themeColors.name}`]['@media (prefers-color-scheme: dark)'][
-      `--primary-${Object.keys(primary)}`
-    ] = primary[Object.keys(primary)];
-  });
+const ThemeBar = styled.div({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: 24,
+  backgroundColor: '#000',
+  paddingLeft: 8,
 });
 
-console.log({ themeX });
+const ThemeSelect = styled.select({
+  height: 24,
+  marginRight: 8,
+  border: 'none',
+  backgroundColor: '#0d0d0d',
+  color: '#9fad1f',
+  paddingLeft: 8,
+  paddingRight: 8,
+  outline: 'none',
+});
 
-const GlobalStyle = createGlobalStyle(themeX);
+const App: FC = () => {
+  const [theme, setTheme] = useState(themeTwitter);
+  const [mode, setMode] = useState<Mode>('auto');
 
-function App(): ReactElement {
+  const handleTheme = (event: ChangeEvent<HTMLSelectElement>) => {
+    if (event.target.value === 'twitter') {
+      setTheme(themeTwitter);
+    } else if (event.target.value === 'facebook') {
+      setTheme(themeFacebook);
+    }
+  };
+
+  const handleMode = (event: ChangeEvent<HTMLSelectElement>) => {
+    setMode(event.target.value as Mode);
+  };
+
   return (
     <StrictMode>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
+      <WhiteUI theme={theme} name="default" mode={mode}>
+        <ThemeBar>
+          <ThemeSelect onChange={handleTheme}>
+            <option value="twitter">twitter</option>
+            <option value="facebook">facebook</option>
+          </ThemeSelect>
+          <ThemeSelect onChange={handleMode}>
+            <option value="auto">auto</option>
+            <option value="light">light</option>
+            <option value="dark">dark</option>
+          </ThemeSelect>
+        </ThemeBar>
         <Router>
           <Switch>
             <Route path="/" exact component={Home} />
@@ -42,9 +69,9 @@ function App(): ReactElement {
             <Route path="*" component={NotFound} />
           </Switch>
         </Router>
-      </ThemeProvider>
+      </WhiteUI>
     </StrictMode>
   );
-}
+};
 
 ReactDOM.render(<App />, document.querySelector('#root'));

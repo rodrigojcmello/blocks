@@ -1,0 +1,104 @@
+{
+  "themes": [
+    {
+      "name": "default",
+      "light": {
+        "name": "default-light",
+        "primary": [
+          {
+            "0": "white"
+          },
+          {
+            "500": "#1877f2"
+          }
+        ],
+        "contrast": [
+          {
+            "0": "white"
+          },
+          {
+            "100": "white"
+          }
+        ]
+      },
+      "dark": {
+        "name": "default-dark",
+        "primary": [
+          {
+            "0": "white"
+          },
+          {
+            "500": "black"
+          }
+        ],
+        "contrast": [
+          {
+            "0": "white"
+          },
+          {
+            "100": "white"
+          }
+        ]
+      }
+    },
+    {
+      "name": "default-alt",
+      "light": {
+        "name": "default-alt-light",
+        "primary": [
+          {
+            "0": "white"
+          },
+          {
+            "500": "red"
+          }
+        ],
+        "contrast": [
+          {
+            "0": "white"
+          },
+          {
+            "100": "white"
+          }
+        ]
+      },
+      "dark": {
+        "name": "default-alt-dark",
+        "primary": [
+          {
+            "0": "white"
+          },
+          {
+            "500": "black"
+          }
+        ],
+        "contrast": [
+          {
+            "0": "white"
+          },
+          {
+            "100": "white"
+          }
+        ]
+      }
+    }
+  ],
+  "components": {
+    "button": {
+      "block": {
+        "backgroundColor": {
+          "0": {
+            "light": "primary-500",
+            "dark": "primary-500"
+          },
+          "1": {
+            "light": "primary-600"
+          }
+        }
+      },
+      "label": {
+        "color": "contrast-0"
+      }
+    }
+  }
+}

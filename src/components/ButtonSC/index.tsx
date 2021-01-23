@@ -9,11 +9,9 @@ interface ButtonProps {
 
 const Button: FC<ButtonProps> = ({ label, onClick, type = 'button' }) => {
   return (
-    <div className="default">
-      <ButtonBlock type={type} onClick={onClick}>
-        <ButtonLabel>{label} 9999</ButtonLabel>
-      </ButtonBlock>
-    </div>
+    <ButtonBlock type={type} onClick={onClick}>
+      <ButtonLabel>{label} 9999</ButtonLabel>
+    </ButtonBlock>
   );
 };
 
