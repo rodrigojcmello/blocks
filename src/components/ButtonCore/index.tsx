@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import { ReactElement } from 'react';
 import style9 from 'style9-dynamic-value';
 import { createGlobalStyle } from 'styled-components';
 import wwwww from '../../json/windows-10-fluent';
@@ -23,31 +23,21 @@ const themes = {
 
 const GlobalStyle = createGlobalStyle(themes);
 
-interface ButtonBlockProps {
+interface ButtonProps {
+  label: string;
   onClick: () => void;
   type?: 'button' | 'submit' | 'reset';
 }
 
-export const ButtonBlock: FC<ButtonBlockProps> = ({
+function Button({
+  label,
   onClick,
   type = 'button',
-  children,
-}) => {
+}: ButtonProps): ReactElement {
   return (
-    <button type={type} onClick={onClick} className={styles('block')}>
-      {children}
-    </button>
-  );
-};
-
-function Button({ onClick, type = 'button' }: ButtonBlockProps): ReactElement {
-  return (
-    <div className="google">
-      <GlobalStyle />
-      <button type={type} onClick={onClick} className={styles('block')}>
-        123
-      </button>
-    </div>
+    <Bl type={type} onClick={onClick} className={styles('block')}>
+      {label} 123
+    </Bl>
   );
 }
 
