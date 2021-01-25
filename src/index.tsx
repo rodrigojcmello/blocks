@@ -9,6 +9,7 @@ import NotFound from './routes/not-found';
 import WhiteUI, { Mode } from './components/Theme';
 import themeTwitter from './theme-twitter.json';
 import themeFacebook from './theme-facebook.json';
+import Colors from './routes/colors';
 
 const ThemeBar = styled.div({
   position: 'absolute',
@@ -50,21 +51,22 @@ const App: FC = () => {
   return (
     <StrictMode>
       <WhiteUI theme={theme} name="default" mode={mode}>
-        <ThemeBar>
-          <ThemeSelect onChange={handleTheme}>
-            <option value="twitter">twitter</option>
-            <option value="facebook">facebook</option>
-          </ThemeSelect>
-          <ThemeSelect onChange={handleMode}>
-            <option value="auto">auto</option>
-            <option value="light">light</option>
-            <option value="dark">dark</option>
-          </ThemeSelect>
-        </ThemeBar>
+        {/* <ThemeBar> */}
+        {/*  <ThemeSelect onChange={handleTheme}> */}
+        {/*    <option value="twitter">twitter</option> */}
+        {/*    <option value="facebook">facebook</option> */}
+        {/*  </ThemeSelect> */}
+        {/*  <ThemeSelect onChange={handleMode}> */}
+        {/*    <option value="auto">auto</option> */}
+        {/*    <option value="light">light</option> */}
+        {/*    <option value="dark">dark</option> */}
+        {/*  </ThemeSelect> */}
+        {/* </ThemeBar> */}
         <Router>
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/button" exact component={Button} />
+            <Route path="/colors" exact component={Colors} />
             <Route path="/page2" exact component={Page2} />
             <Route path="*" component={NotFound} />
           </Switch>

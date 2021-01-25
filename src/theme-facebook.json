@@ -3,7 +3,6 @@
     {
       "name": "default",
       "light": {
-        "name": "default-light",
         "primary": [
           {
             "0": "white"
@@ -22,7 +21,6 @@
         ]
       },
       "dark": {
-        "name": "default-dark",
         "primary": [
           {
             "0": "white"

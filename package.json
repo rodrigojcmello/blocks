@@ -32,6 +32,8 @@
     "autoprefixer": "^10.1.0",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
+    "color-convert": "^1.9.3",
+    "color-to-name": "^1.1.0",
     "css-loader": "^5.0.1",
     "css-modules-typescript-loader": "^4.0.1",
     "csstype": "^3.0.5",
@@ -63,17 +65,21 @@
     "react-router-dom": "^5.2.0",
     "react-spring": "^8.0.27",
     "sass-loader": "^10.1.0",
+    "shader": "^1.0.0",
     "style-loader": "^2.0.0",
     "style9-dynamic-value": "^0.5.9",
     "styled-components": "^5.2.1",
     "type-fest": "^0.20.2",
     "typescript": "^4.1.3",
+    "uuid": "^3.4.0",
     "webpack": "^5.11.1",
     "webpack-cli": "^4.3.0",
     "webpack-dev-server": "^3.11.1",
     "webpack-sources": "^2.2.0"
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.7"
+    "@types/color-convert": "^2.0.0",
+    "@types/styled-components": "^5.1.7",
+    "@types/uuid": "^8.3.0"
   }
 }
