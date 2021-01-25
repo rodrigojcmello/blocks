@@ -6,6 +6,8 @@ import colorConvert from 'color-convert';
 import ColorBox, { Color } from './components/ColorBox';
 import TextField from './components/TextField';
 import ShadeItem from './components/ShadeItem';
+import HashField from './components/HashField';
+import { HEXtoHSL } from '../../util/color';
 
 const Colors: FC = () => {
   const [colorName, setColorName] = useState('');
@@ -130,9 +132,15 @@ const Colors: FC = () => {
   };
 
   const handleHex = (index: number, value: string) => {
+    let newHex = value.toUpperCase();
+    if (!newHex.startsWith('#')) {
+      newHex = `#${newHex}`;
+    }
     const newShades = [...shades];
-    newShades[index].hex = value.toUpperCase();
-    newShades[index].hsl = colorConvert.hex.hsl(value.toUpperCase());
+    newShades[index].hex = newHex;
+    newShades[index].hsl = colorConvert.hex.hsl(newHex);
+    console.log('### 1', colorConvert.hex.hsl(newHex));
+    console.log('### 2', HEXtoHSL(newHex));
     setShades(newShades);
   };
 
@@ -188,10 +196,8 @@ const Colors: FC = () => {
                 handleHSL(2, index, event.currentTarget.value);
               }}
             />
-            <TextField
-              type="text"
-              value={shade.hex}
-              textAlign="center"
+            <HashField
+              value={shade.hex.slice(1)}
               onChange={(event) => {
                 handleHex(index, event.currentTarget.value);
               }}
