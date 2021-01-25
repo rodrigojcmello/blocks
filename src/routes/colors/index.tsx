@@ -7,7 +7,7 @@ import ColorBox, { Color } from './components/ColorBox';
 import TextField from './components/TextField';
 import ShadeItem from './components/ShadeItem';
 import HashField from './components/HashField';
-import { HEXtoHSL } from '../../util/color';
+import { HEXtoHSL, HSLType } from '../../util/color';
 
 const Colors: FC = () => {
   const [colorName, setColorName] = useState('');
@@ -31,85 +31,19 @@ const Colors: FC = () => {
       shader(hexColor, -0.9).toUpperCase(),
     ];
 
-    const newColorList = [
-      {
-        id: uuid(),
-        hex: newShades[0],
-        hsl: colorConvert.hex.hsl(newShades[0]),
-        token: 'green-0',
-        elements: 0,
-      },
-      {
-        id: uuid(),
-        hex: newShades[1],
-        hsl: colorConvert.hex.hsl(newShades[1]),
-        token: 'green-10',
-        elements: 0,
-      },
-      {
-        id: uuid(),
-        hex: newShades[2],
-        hsl: colorConvert.hex.hsl(newShades[2]),
-        token: 'green-20',
-        elements: 0,
-      },
-      {
-        id: uuid(),
-        hex: newShades[3],
-        hsl: colorConvert.hex.hsl(newShades[3]),
-        token: 'green-30',
-        elements: 0,
-      },
-      {
-        id: uuid(),
-        hex: newShades[4],
-        hsl: colorConvert.hex.hsl(newShades[4]),
-        token: 'green-40',
-        elements: 0,
-      },
-      {
-        id: uuid(),
-        hex: newShades[5],
-        hsl: colorConvert.hex.hsl(newShades[5]),
-        token: 'green-50',
-        elements: 0,
-      },
-      {
-        id: uuid(),
-        hex: newShades[6],
-        hsl: colorConvert.hex.hsl(newShades[6]),
-        token: 'green-60',
-        elements: 0,
-      },
-      {
-        id: uuid(),
-        hex: newShades[7],
-        hsl: colorConvert.hex.hsl(newShades[7]),
-        token: 'green-70',
-        elements: 0,
-      },
-      {
-        id: uuid(),
-        hex: newShades[8],
-        hsl: colorConvert.hex.hsl(newShades[8]),
-        token: 'green-80',
-        elements: 0,
-      },
-      {
-        id: uuid(),
-        hex: newShades[9],
-        hsl: colorConvert.hex.hsl(newShades[9]),
-        token: 'green-90',
-        elements: 0,
-      },
-      {
-        id: uuid(),
-        hex: newShades[10],
-        hsl: colorConvert.hex.hsl(newShades[10]),
-        token: 'green-100',
-        elements: 0,
-      },
-    ];
+    const newColorList: Color[] = [];
+    for (let i = 0; i < 10; i += 1) {
+      const hsl = HEXtoHSL(newShades[i]);
+      if (hsl) {
+        newColorList.push({
+          id: uuid(),
+          hex: newShades[i],
+          hsl,
+          token: `green-${i}`,
+          elements: 0,
+        });
+      }
+    }
 
     setShades(newColorList);
   }, [hexColor]);
@@ -138,10 +72,13 @@ const Colors: FC = () => {
     }
     const newShades = [...shades];
     newShades[index].hex = newHex;
-    newShades[index].hsl = colorConvert.hex.hsl(newHex);
-    console.log('### 1', colorConvert.hex.hsl(newHex));
-    console.log('### 2', HEXtoHSL(newHex));
-    setShades(newShades);
+    const hsl = HEXtoHSL(newHex);
+    if (hsl) {
+      newShades[index].hsl = hsl;
+      setShades(newShades);
+      console.log('### hex.hsl', colorConvert.hex.hsl(newHex));
+      console.log('### HEXtoHSL', HEXtoHSL(newHex));
+    }
   };
 
   const handleToken = (index: number, value: string) => {
@@ -189,6 +126,16 @@ const Colors: FC = () => {
             <TextField
               type="number"
               value={shade.hsl[2]}
+              textAlign="center"
+              min="0"
+              max="100"
+              onChange={(event) => {
+                handleHSL(2, index, event.currentTarget.value);
+              }}
+            />
+            <TextField
+              type="number"
+              value={shade.hsl[3] * 100}
               textAlign="center"
               min="0"
               max="100"

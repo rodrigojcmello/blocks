@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { HSL } from 'color-convert/conversions';
+import { HSLType } from '../../../util/color';
 
 export interface Color {
   id: string;
   hex: string;
-  hsl: HSL;
+  hsl: HSLType;
   token: string;
   elements: number;
 }

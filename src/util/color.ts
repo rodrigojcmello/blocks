@@ -8,7 +8,7 @@ function checkHex(hex: string): boolean {
   );
 }
 
-export function HEXtoRGB(colorHex: string): false | number[] {
+export function HEXtoRGB(colorHex: string): false | RGBType {
   if (checkHex(colorHex)) {
     let red = 0;
     let green = 0;
@@ -41,7 +41,9 @@ export function HEXtoRGB(colorHex: string): false | number[] {
 /**
  * @see {@link https://www.rapidtables.com/convert/color/rgb-to-hsl.html}
  */
-export function RGBtoHSL(RGB: number[]): boolean | number[] {
+export type RGBType = [red: number, green: number, blue: number, alpha: number];
+
+export function RGBtoHSL(RGB: RGBType): false | HSLType {
   const red = RGB[0] / 255;
   const green = RGB[1] / 255;
   const blue = RGB[2] / 255;
@@ -75,7 +77,14 @@ export function RGBtoHSL(RGB: number[]): boolean | number[] {
   return [hue, saturation, lightness, alpha];
 }
 
-export function HEXtoHSL(colorHex: string): boolean | number[] {
+export type HSLType = [
+  hue: number,
+  saturation: number,
+  lightness: number,
+  alpha: number
+];
+
+export function HEXtoHSL(colorHex: string): false | HSLType {
   const RGB = HEXtoRGB(colorHex);
   if (RGB) {
     return RGBtoHSL(RGB);
