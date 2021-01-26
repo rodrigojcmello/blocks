@@ -7,7 +7,7 @@ import ColorBox, { Color } from './components/ColorBox';
 import TextField from './components/TextField';
 import ShadeItem from './components/ShadeItem';
 import HashField from './components/HashField';
-import { HEXtoHSL, HSLType } from '../../util/color';
+import { HEXtoHSL, HSLtoHeX, HSLType } from '../../util/color';
 
 const Colors: FC = () => {
   const [colorName, setColorName] = useState('');
@@ -59,8 +59,13 @@ const Colors: FC = () => {
       (letter !== 0 && ValueNumber >= 0 && ValueNumber <= 100)
     ) {
       const newShades = [...shades];
-      newShades[index].hsl[letter] = ValueNumber;
-      newShades[index].hex = `#${colorConvert.hsl.hex(newShades[index].hsl)}`;
+      if (letter !== 3) {
+        newShades[index].hsl[letter] = ValueNumber;
+      } else {
+        newShades[index].hsl[letter] = ValueNumber / 100;
+      }
+      // newShades[index].hex = `#${colorConvert.hsl.hex(newShades[index].hsl)}`;
+      newShades[index].hex = HSLtoHeX(newShades[index].hsl);
       setShades(newShades);
     }
   };
@@ -135,12 +140,12 @@ const Colors: FC = () => {
             />
             <TextField
               type="number"
-              value={shade.hsl[3] * 100}
+              value={Math.round(shade.hsl[3] * 100)}
               textAlign="center"
               min="0"
               max="100"
               onChange={(event) => {
-                handleHSL(2, index, event.currentTarget.value);
+                handleHSL(3, index, event.currentTarget.value);
               }}
             />
             <HashField
