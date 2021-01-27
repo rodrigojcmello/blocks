@@ -24,6 +24,7 @@ const Input = styled.input({
   border: 'none',
   outline: 'none',
   textAlign: 'center',
+  marginRight: 8,
 });
 
 interface HashFieldProps {

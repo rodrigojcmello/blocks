@@ -7,7 +7,7 @@ import ColorBox, { Color } from './components/ColorBox';
 import TextField from './components/TextField';
 import ShadeItem from './components/ShadeItem';
 import HashField from './components/HashField';
-import { HEXtoHSL, HSLtoHeX, HSLType } from '../../util/color';
+import { HEXtoHSL, HSLtoHeX } from '../../util/color';
 
 const Colors: FC = () => {
   const [colorName, setColorName] = useState('');
@@ -17,27 +17,20 @@ const Colors: FC = () => {
   useEffect(() => {
     setColorName(ColorHelper.findClosestColor(hexColor).name);
 
-    const newShades = [
-      shader(hexColor, 0.9).toUpperCase(),
-      shader(hexColor, 0.8).toUpperCase(),
-      shader(hexColor, 0.6).toUpperCase(),
-      shader(hexColor, 0.4).toUpperCase(),
-      shader(hexColor, 0.2).toUpperCase(),
-      shader(hexColor, 0).toUpperCase(),
-      shader(hexColor, -0.2).toUpperCase(),
-      shader(hexColor, -0.4).toUpperCase(),
-      shader(hexColor, -0.6).toUpperCase(),
-      shader(hexColor, -0.8).toUpperCase(),
-      shader(hexColor, -0.9).toUpperCase(),
-    ];
+    const newShades = [shader(hexColor, 0).toUpperCase()];
+
+    for (let i = 0; i < 1; i += 0.2) {
+      newShades.unshift(shader(hexColor, i).toUpperCase());
+      newShades.push(shader(hexColor, -i).toUpperCase());
+    }
 
     const newColorList: Color[] = [];
-    for (let i = 0; i < 10; i += 1) {
-      const hsl = HEXtoHSL(newShades[i]);
+    for (const [i, newShade] of newShades.entries()) {
+      const hsl = HEXtoHSL(newShade);
       if (hsl) {
         newColorList.push({
           id: uuid(),
-          hex: newShades[i],
+          hex: newShade,
           hsl,
           token: `green-${i}`,
           elements: 0,
@@ -64,9 +57,11 @@ const Colors: FC = () => {
       } else {
         newShades[index].hsl[letter] = ValueNumber / 100;
       }
-      // newShades[index].hex = `#${colorConvert.hsl.hex(newShades[index].hsl)}`;
-      newShades[index].hex = HSLtoHeX(newShades[index].hsl);
-      setShades(newShades);
+      const hex = HSLtoHeX(newShades[index].hsl);
+      if (hex) {
+        newShades[index].hex = hex;
+        setShades(newShades);
+      }
     }
   };
 
@@ -81,8 +76,6 @@ const Colors: FC = () => {
     if (hsl) {
       newShades[index].hsl = hsl;
       setShades(newShades);
-      console.log('### hex.hsl', colorConvert.hex.hsl(newHex));
-      console.log('### HEXtoHSL', HEXtoHSL(newHex));
     }
   };
 
@@ -110,7 +103,7 @@ const Colors: FC = () => {
             <ColorBox shade={shade} />
             <TextField
               type="number"
-              value={shade.hsl[0]}
+              value={shade.hsl[0].toString().replace(/^0+/, '')}
               textAlign="center"
               min="0"
               max="360"
@@ -120,7 +113,7 @@ const Colors: FC = () => {
             />
             <TextField
               type="number"
-              value={shade.hsl[1]}
+              value={shade.hsl[1].toString().replace(/^0+/, '')}
               textAlign="center"
               min="0"
               max="100"
@@ -130,7 +123,7 @@ const Colors: FC = () => {
             />
             <TextField
               type="number"
-              value={shade.hsl[2]}
+              value={shade.hsl[2].toString().replace(/^0+/, '')}
               textAlign="center"
               min="0"
               max="100"
@@ -140,7 +133,9 @@ const Colors: FC = () => {
             />
             <TextField
               type="number"
-              value={Math.round(shade.hsl[3] * 100)}
+              value={Math.round(shade.hsl[3] * 100)
+                .toString()
+                .replace(/^0+/, '')}
               textAlign="center"
               min="0"
               max="100"

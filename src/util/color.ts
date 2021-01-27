@@ -33,8 +33,6 @@ export function HEXtoRGB(colorHex: string): false | RGBType {
       }
     }
 
-    console.log([red, green, blue, alpha]);
-
     return [red, green, blue, alpha];
   }
   return false;
@@ -83,10 +81,13 @@ export type HSLType = [
   hue: number,
   saturation: number,
   lightness: number,
+  /**
+   * between 0 and 1
+   */
   alpha: number
 ];
 
-export function HEXtoHSL(colorHex: string): false | HSLType {
+export function HEXtoHSL(colorHex: string): HSLType | false {
   const RGB = HEXtoRGB(colorHex);
   if (RGB) {
     return RGBtoHSL(RGB);
@@ -94,63 +95,90 @@ export function HEXtoHSL(colorHex: string): false | HSLType {
   return false;
 }
 
-export function HSLtoHeX(HSL: HSLType): string {
-  const h = HSL[0];
-  let s = HSL[1];
-  let l = HSL[2];
-  let a: string | number = HSL[3];
+export function checkHSL(HSL: HSLType): boolean {
+  const hue = HSL[0];
+  const saturation = HSL[1];
+  const lightness = HSL[2];
+  const alpha = HSL[3];
+  return (
+    hue >= 0 &&
+    hue <= 360 &&
+    saturation >= 0 &&
+    saturation <= 100 &&
+    lightness >= 0 &&
+    lightness <= 100 &&
+    alpha >= 0 &&
+    alpha <= 1
+  );
+}
 
-  s /= 100;
-  l /= 100;
+export function HSLtoRGB(HSL: HSLType): RGBType | false {
+  if (checkHSL(HSL)) {
+    const h = HSL[0];
+    let s = HSL[1];
+    let l = HSL[2];
+    const alpha = HSL[3];
 
-  const c = (1 - Math.abs(2 * l - 1)) * s;
-  const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
-  const m = l - c / 2;
-  let r: string | number = 0;
-  let g: string | number = 0;
-  let b: string | number = 0;
+    s /= 100;
+    l /= 100;
 
-  if (h >= 0 && h < 60) {
-    r = c;
-    g = x;
-    b = 0;
-  } else if (h >= 60 && h < 120) {
-    r = x;
-    g = c;
-    b = 0;
-  } else if (h >= 120 && h < 180) {
-    r = 0;
-    g = c;
-    b = x;
-  } else if (h >= 180 && h < 240) {
-    r = 0;
-    g = x;
-    b = c;
-  } else if (h >= 240 && h < 300) {
-    r = x;
-    g = 0;
-    b = c;
-  } else if (h >= 300 && h < 360) {
-    r = c;
-    g = 0;
-    b = x;
+    const c = (1 - Math.abs(2 * l - 1)) * s;
+    const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+    const m = l - c / 2;
+
+    let red = 0;
+    let green = 0;
+    let blue = 0;
+
+    if (h >= 0 && h < 60) {
+      red = c;
+      green = x;
+      blue = 0;
+    } else if (h >= 60 && h < 120) {
+      red = x;
+      green = c;
+      blue = 0;
+    } else if (h >= 120 && h < 180) {
+      red = 0;
+      green = c;
+      blue = x;
+    } else if (h >= 180 && h < 240) {
+      red = 0;
+      green = x;
+      blue = c;
+    } else if (h >= 240 && h < 300) {
+      red = x;
+      green = 0;
+      blue = c;
+    } else if (h >= 300 && h < 360) {
+      red = c;
+      green = 0;
+      blue = x;
+    }
+
+    red = Math.round((red + m) * 255);
+    green = Math.round((green + m) * 255);
+    blue = Math.round((blue + m) * 255);
+
+    return [red, green, blue, alpha];
   }
+  return false;
+}
 
-  r = Math.round((r + m) * 255).toString(16);
-  g = Math.round((g + m) * 255).toString(16);
-  b = Math.round((b + m) * 255).toString(16);
+export function HSLtoHeX(HSL: HSLType): string | false {
+  const RGB = HSLtoRGB(HSL);
 
-  if (r.length === 1) r = `0${r}`;
-  if (g.length === 1) g = `0${g}`;
-  if (b.length === 1) b = `0${b}`;
+  if (RGB) {
+    let r = RGB[0].toString(16);
+    let g = RGB[1].toString(16);
+    let b = RGB[2].toString(16);
+    const a = (RGB[3] === 1 ? '' : Math.round(RGB[3] * 255)).toString(16);
 
-  let hex = '';
-  if (a === 1) {
-    hex = `#${r}${g}${b}`;
-  } else {
-    a = Math.round(a * 255).toString(16);
-    hex = `#${r}${g}${b}${a}`;
+    if (r.length === 1) r = `0${r}`;
+    if (g.length === 1) g = `0${g}`;
+    if (b.length === 1) b = `0${b}`;
+
+    return `#${r}${g}${b}${a}`.toUpperCase();
   }
-
-  return hex.toUpperCase();
+  return false;
 }
