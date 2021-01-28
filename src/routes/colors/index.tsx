@@ -2,12 +2,15 @@ import { ChangeEvent, FC, useEffect, useState } from 'react';
 import ColorHelper from 'color-to-name';
 import shader from 'shader';
 import { v4 as uuid } from 'uuid';
-import colorConvert from 'color-convert';
 import ColorBox, { Color } from './components/ColorBox';
 import TextField from './components/TextField';
 import ShadeItem from './components/ShadeItem';
 import HashField from './components/HashField';
-import { HEXtoHSL, HSLtoHeX } from '../../util/color';
+import {
+  HEXtoHSL,
+  HSLtoHeX,
+  colorName as colorNameCustom,
+} from '../../util/color';
 
 const Colors: FC = () => {
   const [colorName, setColorName] = useState('');
@@ -17,9 +20,13 @@ const Colors: FC = () => {
   useEffect(() => {
     setColorName(ColorHelper.findClosestColor(hexColor).name);
 
+    console.log('### lib', ColorHelper.findClosestColor(hexColor).name);
+    console.log('### custom', colorNameCustom(hexColor));
+
     const newShades = [shader(hexColor, 0).toUpperCase()];
 
-    for (let i = 0; i < 1; i += 0.2) {
+    const x = 0.15;
+    for (let i = x; i < 1; i += x) {
       newShades.unshift(shader(hexColor, i).toUpperCase());
       newShades.push(shader(hexColor, -i).toUpperCase());
     }

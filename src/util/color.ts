@@ -1,3 +1,5 @@
+import pantone from './origin/pantone';
+
 /**
  * @see {@link https://www.w3.org/TR/css-color-4/#hex-notation}
  */
@@ -13,7 +15,7 @@ export function HEXtoRGB(colorHex: string): false | RGBType {
     let red = 0;
     let green = 0;
     let blue = 0;
-    let alpha = 255;
+    let alpha = 1;
 
     const h = colorHex.slice(1);
 
@@ -47,7 +49,7 @@ export function RGBtoHSL(RGB: RGBType): false | HSLType {
   const red = RGB[0] / 255;
   const green = RGB[1] / 255;
   const blue = RGB[2] / 255;
-  const alpha = Number.parseFloat((RGB[3] / 255).toFixed(2));
+  const alpha = RGB[3];
 
   const cMin = Math.min(red, green, blue);
   const cMax = Math.max(red, green, blue);
@@ -179,6 +181,71 @@ export function HSLtoHeX(HSL: HSLType): string | false {
     if (b.length === 1) b = `0${b}`;
 
     return `#${r}${g}${b}${a}`.toUpperCase();
+  }
+  return false;
+}
+
+// export function colorName(HEX: string): string | false {
+//   const RGB = HEXtoRGB(HEX);
+//   if (RGB) {
+//     const match = [];
+//     pantone.forEach((p) => {
+//       const radio = 20;
+//       if (
+//         p.rgb[0] >= RGB[0] - radio &&
+//         p.rgb[0] <= RGB[0] + radio &&
+//         p.rgb[1] >= RGB[1] - radio &&
+//         p.rgb[1] <= RGB[1] + radio &&
+//         p.rgb[2] >= RGB[2] - radio &&
+//         p.rgb[2] <= RGB[2] + radio
+//       ) {
+//         match.push(p);
+//       }
+//     });
+//
+//     // console.log({ match });
+//     return match;
+//   }
+//   return false;
+// }
+
+/**
+ * @see {@link https://en.wikipedia.org/wiki/Color_difference}
+ * @param HEX
+ */
+export function colorName(HEX: string): any {
+  if (checkHex(HEX)) {
+    const RGB1 = HEXtoRGB(HEX);
+    if (RGB1) {
+      const R1 = RGB1[0];
+      const G1 = RGB1[1];
+      const B1 = RGB1[2];
+
+      const c = {
+        distance: Number.POSITIVE_INFINITY,
+        color: undefined,
+      };
+
+      pantone.forEach((color) => {
+        const RGB2 = HEXtoRGB(color.hex);
+        if (RGB2) {
+          const R2 = RGB2[0];
+          const G2 = RGB2[1];
+          const B2 = RGB2[2];
+
+          const distance = Math.sqrt(
+            (R1 - R2) ** 2 + (G1 - G2) ** 2 + (B1 - B2) ** 2
+          );
+
+          if (distance < c.distance) {
+            c.distance = distance;
+            c.color = color;
+          }
+        }
+      });
+
+      return c;
+    }
   }
   return false;
 }
