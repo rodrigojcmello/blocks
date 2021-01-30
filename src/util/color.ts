@@ -1,4 +1,5 @@
-import pantone from './origin/pantone';
+// import pantone from './origin/pantone/pantone';
+// import html from './origin/html/html';
 
 /**
  * @see {@link https://www.w3.org/TR/css-color-4/#hex-notation}
@@ -10,32 +11,32 @@ function checkHex(hex: string): boolean {
   );
 }
 
-export function HEXtoRGB(colorHex: string): false | RGBType {
-  if (checkHex(colorHex)) {
-    let red = 0;
-    let green = 0;
-    let blue = 0;
-    let alpha = 1;
+export function HEXtoRGB(HEX: string): false | RGBType {
+  if (checkHex(HEX)) {
+    let R = 0;
+    let G = 0;
+    let B = 0;
+    let A = 1;
 
-    const h = colorHex.slice(1);
+    const h = HEX.slice(1);
 
     if (h.length === 6 || h.length === 8) {
-      red = Number.parseInt(`${h[0]}${h[1]}`, 16);
-      green = Number.parseInt(`${h[2]}${h[3]}`, 16);
-      blue = Number.parseInt(`${h[4]}${h[5]}`, 16);
+      R = Number.parseInt(`${h[0]}${h[1]}`, 16);
+      G = Number.parseInt(`${h[2]}${h[3]}`, 16);
+      B = Number.parseInt(`${h[4]}${h[5]}`, 16);
       if (h.length === 8) {
-        alpha = Number.parseInt(`${h[6]}${h[7]}`, 16);
+        A = Number.parseInt(`${h[6]}${h[7]}`, 16);
       }
     } else if (h.length === 3 || h.length === 4) {
-      red = Number.parseInt(`${h[0]}${h[0]}`, 16);
-      green = Number.parseInt(`${h[1]}${h[1]}`, 16);
-      blue = Number.parseInt(`${h[2]}${h[2]}`, 16);
+      R = Number.parseInt(`${h[0]}${h[0]}`, 16);
+      G = Number.parseInt(`${h[1]}${h[1]}`, 16);
+      B = Number.parseInt(`${h[2]}${h[2]}`, 16);
       if (h.length === 4) {
-        alpha = Number.parseInt(`${h[3]}${h[3]}`, 16);
+        A = Number.parseInt(`${h[3]}${h[3]}`, 16);
       }
     }
 
-    return [red, green, blue, alpha];
+    return [R, G, B, A];
   }
   return false;
 }
@@ -83,9 +84,6 @@ export type HSLType = [
   hue: number,
   saturation: number,
   lightness: number,
-  /**
-   * between 0 and 1
-   */
   alpha: number
 ];
 
@@ -119,7 +117,7 @@ export function HSLtoRGB(HSL: HSLType): RGBType | false {
     const h = HSL[0];
     let s = HSL[1];
     let l = HSL[2];
-    const alpha = HSL[3];
+    const A = HSL[3];
 
     s /= 100;
     l /= 100;
@@ -128,41 +126,41 @@ export function HSLtoRGB(HSL: HSLType): RGBType | false {
     const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
     const m = l - c / 2;
 
-    let red = 0;
-    let green = 0;
-    let blue = 0;
+    let R = 0;
+    let G = 0;
+    let B = 0;
 
     if (h >= 0 && h < 60) {
-      red = c;
-      green = x;
-      blue = 0;
+      R = c;
+      G = x;
+      B = 0;
     } else if (h >= 60 && h < 120) {
-      red = x;
-      green = c;
-      blue = 0;
+      R = x;
+      G = c;
+      B = 0;
     } else if (h >= 120 && h < 180) {
-      red = 0;
-      green = c;
-      blue = x;
+      R = 0;
+      G = c;
+      B = x;
     } else if (h >= 180 && h < 240) {
-      red = 0;
-      green = x;
-      blue = c;
+      R = 0;
+      G = x;
+      B = c;
     } else if (h >= 240 && h < 300) {
-      red = x;
-      green = 0;
-      blue = c;
+      R = x;
+      G = 0;
+      B = c;
     } else if (h >= 300 && h < 360) {
-      red = c;
-      green = 0;
-      blue = x;
+      R = c;
+      G = 0;
+      B = x;
     }
 
-    red = Math.round((red + m) * 255);
-    green = Math.round((green + m) * 255);
-    blue = Math.round((blue + m) * 255);
+    R = Math.round((R + m) * 255);
+    G = Math.round((G + m) * 255);
+    B = Math.round((B + m) * 255);
 
-    return [red, green, blue, alpha];
+    return [R, G, B, A];
   }
   return false;
 }
@@ -209,43 +207,41 @@ export function HSLtoHeX(HSL: HSLType): string | false {
 //   return false;
 // }
 
-/**
- * @see {@link https://en.wikipedia.org/wiki/Color_difference}
- * @param HEX
- */
-export function colorName(HEX: string): any {
-  if (checkHex(HEX)) {
-    const RGB1 = HEXtoRGB(HEX);
-    if (RGB1) {
-      const R1 = RGB1[0];
-      const G1 = RGB1[1];
-      const B1 = RGB1[2];
-
-      const c = {
-        distance: Number.POSITIVE_INFINITY,
-        color: undefined,
-      };
-
-      pantone.forEach((color) => {
-        const RGB2 = HEXtoRGB(color.hex);
-        if (RGB2) {
-          const R2 = RGB2[0];
-          const G2 = RGB2[1];
-          const B2 = RGB2[2];
-
-          const distance = Math.sqrt(
-            (R1 - R2) ** 2 + (G1 - G2) ** 2 + (B1 - B2) ** 2
-          );
-
-          if (distance < c.distance) {
-            c.distance = distance;
-            c.color = color;
-          }
-        }
-      });
-
-      return c;
-    }
-  }
-  return false;
-}
+// /**
+//  * @see {@link https://en.wikipedia.org/wiki/Color_difference}
+//  * @param HEX
+//  */
+// export function colorName(HEX: string): any {
+//   const RGB1 = HEXtoRGB(HEX);
+//   if (RGB1) {
+//     const R1 = RGB1[0];
+//     const G1 = RGB1[1];
+//     const B1 = RGB1[2];
+//
+//     const c = {
+//       distance: Number.POSITIVE_INFINITY,
+//       color: undefined,
+//     };
+//
+//     [...pantone, ...html].forEach((color) => {
+//       const RGB2 = HEXtoRGB(color.hex);
+//       if (RGB2) {
+//         const R2 = RGB2[0];
+//         const G2 = RGB2[1];
+//         const B2 = RGB2[2];
+//
+//         const distance = Math.sqrt(
+//           (R1 - R2) ** 2 + (G1 - G2) ** 2 + (B1 - B2) ** 2
+//         );
+//
+//         if (distance < c.distance) {
+//           c.distance = distance;
+//           c.color = color;
+//         }
+//       }
+//     });
+//
+//     return c;
+//   }
+//   return false;
+// }
