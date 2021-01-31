@@ -15,10 +15,10 @@ interface TextFieldProps {
 const TextField = styled.input<TextFieldProps>(({ textAlign }) => ({
   height: 30,
   borderRadius: 4,
-  border: 'none',
+  border: '1px solid #F0F0F0',
   backgroundColor: '#F7F7F7',
   outline: 'none',
-  // padding: '0 18px',
+  color: '#333333',
   boxSizing: 'border-box',
   width: '100%',
   textAlign,

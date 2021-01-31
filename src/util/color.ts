@@ -1,5 +1,8 @@
-// import pantone from './origin/pantone/pantone';
-// import html from './origin/html/html';
+import { Property } from 'csstype';
+import pantone from './origin/pantone/pantone';
+import html from './origin/html/html';
+import crayola from './origin/crayola/crayola';
+import { Color, Origin } from './origin/types';
 
 /**
  * @see {@link https://www.w3.org/TR/css-color-4/#hex-notation}
@@ -207,41 +210,61 @@ export function HSLtoHeX(HSL: HSLType): string | false {
 //   return false;
 // }
 
-// /**
-//  * @see {@link https://en.wikipedia.org/wiki/Color_difference}
-//  * @param HEX
-//  */
-// export function colorName(HEX: string): any {
-//   const RGB1 = HEXtoRGB(HEX);
-//   if (RGB1) {
-//     const R1 = RGB1[0];
-//     const G1 = RGB1[1];
-//     const B1 = RGB1[2];
-//
-//     const c = {
-//       distance: Number.POSITIVE_INFINITY,
-//       color: undefined,
-//     };
-//
-//     [...pantone, ...html].forEach((color) => {
-//       const RGB2 = HEXtoRGB(color.hex);
-//       if (RGB2) {
-//         const R2 = RGB2[0];
-//         const G2 = RGB2[1];
-//         const B2 = RGB2[2];
-//
-//         const distance = Math.sqrt(
-//           (R1 - R2) ** 2 + (G1 - G2) ** 2 + (B1 - B2) ** 2
-//         );
-//
-//         if (distance < c.distance) {
-//           c.distance = distance;
-//           c.color = color;
-//         }
-//       }
-//     });
-//
-//     return c;
-//   }
-//   return false;
-// }
+interface ClosestColor extends Color {
+  distance: number;
+}
+/**
+ * @see {@link https://en.wikipedia.org/wiki/Color_difference}
+ * @param HEX
+ */
+export function colorName(HEX: string): any {
+  const RGB1 = HEXtoRGB(HEX);
+  if (RGB1) {
+    const R1 = RGB1[0];
+    const G1 = RGB1[1];
+    const B1 = RGB1[2];
+
+    let closestColor: ClosestColor = {
+      distance: Number.POSITIVE_INFINITY,
+      name: '',
+      token: '',
+      hex: '',
+      rgb: [0, 0, 0, 0],
+      hsl: [0, 0, 0, 0],
+      origin: { name: '' },
+    };
+
+    let closestColors: ClosestColor[] = [];
+
+    ([...pantone, ...crayola, ...html] as Color[]).forEach((color) => {
+      const RGB2 = HEXtoRGB(color.hex);
+      if (RGB2) {
+        const R2 = RGB2[0];
+        const G2 = RGB2[1];
+        const B2 = RGB2[2];
+
+        const distance = Math.sqrt(
+          (R1 - R2) ** 2 + (G1 - G2) ** 2 + (B1 - B2) ** 2
+        );
+
+        if (distance < closestColor.distance) {
+          closestColor = {
+            distance,
+            ...color,
+          };
+          closestColors = [closestColor];
+        } else if (distance === closestColor.distance) {
+          closestColors.push({
+            distance,
+            ...color,
+          });
+        }
+      }
+    });
+
+    console.log({ closestColors });
+
+    return closestColor;
+  }
+  return false;
+}

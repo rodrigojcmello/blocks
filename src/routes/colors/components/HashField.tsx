@@ -1,21 +1,26 @@
 import styled from 'styled-components';
-import { ChangeEventHandler, FC } from 'react';
-import hashIcon from './assets/simple-small/hashtag.png';
+import { ChangeEventHandler, FC, InputHTMLAttributes } from 'react';
 
 const HashFieldContainer = styled.div({
   height: 30,
   borderRadius: 4,
-  border: 'none',
   backgroundColor: '#F7F7F7',
   boxSizing: 'border-box',
   width: '100%',
-  display: 'flex',
+  display: 'grid',
+  gridTemplateColumns: '28px 1fr',
+  border: '1px solid #F0F0F0',
 });
 
-const HashIcon = styled.img({
-  width: 16,
-  height: 16,
-  padding: 7,
+const Character = styled.div({
+  height: 28,
+  backgroundColor: '#FFFFFF',
+  borderRadius: 4,
+  textAlign: 'center',
+  lineHeight: '28px',
+  fontFamily: "'Titillium Web', sans-serif",
+  fontSize: 14,
+  color: '#333333',
 });
 
 const Input = styled.input({
@@ -25,18 +30,26 @@ const Input = styled.input({
   outline: 'none',
   textAlign: 'center',
   marginRight: 8,
+  color: '#333333',
+  fontFamily: "'Titillium Web', sans-serif",
 });
 
-interface HashFieldProps {
+interface HashFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
+  character: string;
 }
 
-const HashField: FC<HashFieldProps> = ({ value, onChange }) => {
+const HashField: FC<HashFieldProps> = ({
+  value,
+  onChange,
+  character,
+  ...rest
+}) => {
   return (
     <HashFieldContainer>
-      <HashIcon alt="hash icon" src={hashIcon} />
-      <Input type="text" value={value} onChange={onChange} />
+      <Character>{character}</Character>
+      <Input type="text" value={value} onChange={onChange} {...rest} />
     </HashFieldContainer>
   );
 };

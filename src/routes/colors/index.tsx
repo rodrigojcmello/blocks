@@ -11,6 +11,7 @@ import {
   HSLtoHeX,
   colorName as colorNameCustom,
 } from '../../util/color';
+import './style.scss';
 
 const Colors: FC = () => {
   const [colorName, setColorName] = useState('');
@@ -108,37 +109,37 @@ const Colors: FC = () => {
         {shades.map((shade, index) => (
           <ShadeItem key={shade.id}>
             <ColorBox shade={shade} />
-            <TextField
+            <HashField
               type="number"
               value={shade.hsl[0].toString().replace(/^0+/, '')}
-              textAlign="center"
               min="0"
               max="360"
               onChange={(event) => {
                 handleHSL(0, index, event.currentTarget.value);
               }}
+              character="H"
             />
-            <TextField
+            <HashField
               type="number"
               value={shade.hsl[1].toString().replace(/^0+/, '')}
-              textAlign="center"
               min="0"
               max="100"
               onChange={(event) => {
                 handleHSL(1, index, event.currentTarget.value);
               }}
+              character="S"
             />
-            <TextField
+            <HashField
               type="number"
               value={shade.hsl[2].toString().replace(/^0+/, '')}
-              textAlign="center"
               min="0"
               max="100"
               onChange={(event) => {
                 handleHSL(2, index, event.currentTarget.value);
               }}
+              character="L"
             />
-            <TextField
+            <HashField
               type="number"
               value={Math.round(shade.hsl[3] * 100)
                 .toString()
@@ -149,12 +150,14 @@ const Colors: FC = () => {
               onChange={(event) => {
                 handleHSL(3, index, event.currentTarget.value);
               }}
+              character="A"
             />
             <HashField
               value={shade.hex.slice(1)}
               onChange={(event) => {
                 handleHex(index, event.currentTarget.value);
               }}
+              character="#"
             />
             <TextField
               value={shade.token}

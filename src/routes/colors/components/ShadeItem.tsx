@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const ShadeItem = styled.div(() => ({
   display: 'grid',
-  gridTemplateColumns: '30px 60px 60px 60px 60px 120px 240px',
+  gridTemplateColumns: '30px 70px 70px 70px 70px 110px 240px',
   gridGap: 8,
   marginBottom: 8,
 }));

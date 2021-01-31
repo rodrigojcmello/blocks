@@ -81,7 +81,7 @@ module.exports = (env = { NODE_ENV: 'development' }) => {
         {
           test: /\.module.s?css$/,
           use: [
-            MiniCssExtractPlugin.loader,
+            prod ? MiniCssExtractPlugin.loader : 'style-loader',
             'css-modules-typescript-loader',
             {
               loader: 'css-loader',
@@ -107,7 +107,7 @@ module.exports = (env = { NODE_ENV: 'development' }) => {
         {
           test: /^((?!\.module).)*s?css$/,
           use: [
-            MiniCssExtractPlugin.loader,
+            prod ? MiniCssExtractPlugin.loader : 'style-loader',
             'css-loader',
             {
               loader: 'postcss-loader',
