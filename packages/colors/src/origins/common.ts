@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { exec } from 'child_process';
-import { HEXtoHSL, HEXtoRGB } from '../color';
 import { Color, Origin } from './types';
+import { convertHexToHsl, convertHexToRgb } from '../hex';
 
 let names: Color[] = [];
 
@@ -28,8 +28,8 @@ export function formatColorTexts(
   hex: string,
   origin: Origin
 ): void {
-  const RGB = HEXtoRGB(hex);
-  const HSL = HEXtoHSL(hex);
+  const RGB = convertHexToRgb(hex);
+  const HSL = convertHexToHsl(hex);
   const nameDone = capitalize(
     name.trim().replaceAll('-', ' ').replaceAll('w/', 'with'),
     true

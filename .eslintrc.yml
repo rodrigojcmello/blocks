@@ -4,16 +4,12 @@ env:
 extends:
   - airbnb-base
   - plugin:prettier/recommended
-  - prettier
-
-plugins:
-  - prettier
-  - unicorn
+  - plugin:unicorn/recommended
 
 overrides:
   - files:
-      - "**/*.ts"
-      - "**/*.tsx"
+      - '**/*.ts'
+      - '**/*.tsx'
 
     env:
       browser: true
@@ -46,11 +42,11 @@ overrides:
 
       # TypeScript
       - 'plugin:@typescript-eslint/recommended'
+      - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
       - plugin:import/typescript
 
       # Prettier
       - plugin:prettier/recommended
-      - prettier
       - prettier/react
       - 'prettier/@typescript-eslint'
 
@@ -58,6 +54,21 @@ overrides:
       # ------------------------------------------------------------------------
       # JavaScript
       # ------------------------------------------------------------------------
+
+      # Maximum 300 lines in a file
+      max-lines: error
+
+      # TypeScript validates it
+      # no-use-before-define: off
+
+      no-restricted-syntax: off
+
+      # ------------------------------------------------------------------------
+      # Unicorn
+      # ------------------------------------------------------------------------
+
+      # Abbreviations are commonly known, so there is no need to avoid them
+      unicorn/prevent-abbreviations: off
 
       # Enable pascalCase for React components
       unicorn/filename-case:
@@ -67,40 +78,17 @@ overrides:
             pascalCase: true
             camelCase: true
 
-      # Maximum 300 lines in a file
-      max-lines: error
-
-      # Not friendly to refactorings
-      import/prefer-default-export: off
-
-      # Abbreviations are commonly known, so there is no need to avoid them
-      unicorn/prevent-abbreviations: off
-
-      # TypeScript validates it
-      no-use-before-define: off
-
       # ------------------------------------------------------------------------
-      # TypeScript
-      # ------------------------------------------------------------------------
-
-      # Resolves TypeScript extensions
-      import/extensions:
-        - error
-        - extensions:
-            - ".ts"
-            - ".tsx"
-
-      # ------------------------------------------------------------------------
-      # React / JSX
+      # React
       # ------------------------------------------------------------------------
 
       # Enable tsx files for React components
       react/jsx-filename-extension:
         - error
         - extensions:
-            - ".tsx"
+            - '.tsx'
 
-      # Not required in React 17 with @babel/preset-react runtime = 'automatic'
+      # Not required in React 17
       react/react-in-jsx-scope: off
 
       # JSX Spread Attributes have an interface in TypeScript that helps us
@@ -111,20 +99,20 @@ overrides:
       react/prop-types: off
       react/require-default-props: off
 
-      react/button-has-type: off
-
-      no-restricted-syntax: off
-
       # ------------------------------------------------------------------------
-      # Tests
+      # Import
       # ------------------------------------------------------------------------
+
+      # Resolves TypeScript extensions
+      import/extensions:
+        - error
+        - extensions:
+            - '.ts'
+            - '.tsx'
 
       # Import exception to tests
       import/no-extraneous-dependencies:
         - error
         - devDependencies:
-            - "**/*.test.tsx"
-            - "**/setupTests.ts"
-
-
-
+            - '**/*.test.tsx'
+            - '**/setupTests.ts'

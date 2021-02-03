@@ -1,5 +1,4 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import ColorHelper from 'color-to-name';
 import shader from 'shader';
 import { v4 as uuid } from 'uuid';
 import ColorBox, { Color } from './components/ColorBox';
@@ -9,9 +8,9 @@ import HashField from './components/HashField';
 import {
   HEXtoHSL,
   HSLtoHeX,
-  colorName as colorNameCustom,
+  colorName as findColorName,
 } from '../../util/color';
-import './style.scss';
+// import './style.scss';
 
 const Colors: FC = () => {
   const [colorName, setColorName] = useState('');
@@ -19,10 +18,10 @@ const Colors: FC = () => {
   const [shades, setShades] = useState<Color[]>([]);
 
   useEffect(() => {
-    setColorName(ColorHelper.findClosestColor(hexColor).name);
+    setColorName(findColorName(hexColor).name);
 
-    console.log('### lib', ColorHelper.findClosestColor(hexColor).name);
-    console.log('### custom', colorNameCustom(hexColor));
+    // console.log('### lib', ColorHelper.findClosestColor(hexColor).name);
+    console.log('### custom', findColorName(hexColor));
 
     const newShades = [shader(hexColor, 0).toUpperCase()];
 

@@ -1,0 +1,21 @@
+{
+  "name": "@flex-ui/colors",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "keywords": [
+    "rgb",
+    "hex",
+    "color",
+    "hsl",
+    "convert",
+    "name",
+    "closest",
+    "find"
+  ],
+  "author": "Rodrigo José Carvalho de Mello",
+  "license": "ISC",
+  "scripts": {
+    "colors:build": "rimraf lib && tsc"
+  }
+}

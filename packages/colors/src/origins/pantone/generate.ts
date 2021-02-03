@@ -3,7 +3,7 @@
  * @see {@link https://raw.githubusercontent.com/Margaret2/pantone-colors/master/pantone-numbers.json}
  */
 import pantone from './raw.json';
-import { formatColorTexts, writeColor } from '../utils';
+import { formatColorTexts, writeColor } from '../common';
 
 interface Pantone {
   [key: string]: {
@@ -13,12 +13,12 @@ interface Pantone {
 }
 const pan: Pantone = pantone;
 
-Object.keys(pan).forEach((key) => {
+for (const key of Object.keys(pan)) {
   const hex = `#${pan[key].hex}`.replaceAll(',', '');
   formatColorTexts(pan[key].name, hex, {
     name: 'pantone',
     code: key,
   });
-});
+}
 
 writeColor('pantone');

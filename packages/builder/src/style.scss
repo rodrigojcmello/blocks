@@ -48,14 +48,14 @@
 
 
 
-/* Chrome, Safari, Edge, Opera */
+/* Webkit */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* Firefox */
+/* Gecko */
 input[type=number] {
   -moz-appearance: textfield;
 }

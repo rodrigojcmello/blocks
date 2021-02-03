@@ -2,9 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const Style9Plugin = require('style9-dynamic-value/webpack');
 
 module.exports = (env = { NODE_ENV: 'development' }) => {
   const prod = env.NODE_ENV === 'production';
@@ -13,7 +11,7 @@ module.exports = (env = { NODE_ENV: 'development' }) => {
   console.log(`MODE: ${prod ? 'PRODUCTION' : 'DEVELOPMENT'}`);
 
   return {
-    entry: './src/index.tsx',
+    entry: './src/app.tsx',
     output: {
       filename: '[name].[chunkhash].js',
       path: path.resolve(__dirname, 'dist'),
@@ -26,11 +24,6 @@ module.exports = (env = { NODE_ENV: 'development' }) => {
     plugins: [
       // HTML Template
       new HtmlWebpackPlugin({ template: './index.html' }),
-
-      new Style9Plugin(),
-
-      // Extract CSS for more performance
-      new MiniCssExtractPlugin(),
 
       // Clean old build
       prod && new CleanWebpackPlugin(),
@@ -50,7 +43,6 @@ module.exports = (env = { NODE_ENV: 'development' }) => {
         {
           test: /\.([tj])sx?$/,
           use: [
-            Style9Plugin.loader,
             {
               loader: 'babel-loader',
               options: {
@@ -77,48 +69,6 @@ module.exports = (env = { NODE_ENV: 'development' }) => {
         {
           test: /\.(png|jpe?g|gif|woff2?|eot|otf|webp)$/i,
           use: 'file-loader',
-        },
-        {
-          test: /\.module.s?css$/,
-          use: [
-            prod ? MiniCssExtractPlugin.loader : 'style-loader',
-            'css-modules-typescript-loader',
-            {
-              loader: 'css-loader',
-              options: {
-                modules: {
-                  localIdentName: prod
-                    ? '[hash:base64:5]'
-                    : '[local]-[hash:base64:5]',
-                },
-              },
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                postcssOptions: {
-                  plugins: ['autoprefixer'],
-                },
-              },
-            },
-            'sass-loader',
-          ],
-        },
-        {
-          test: /^((?!\.module).)*s?css$/,
-          use: [
-            prod ? MiniCssExtractPlugin.loader : 'style-loader',
-            'css-loader',
-            {
-              loader: 'postcss-loader',
-              options: {
-                postcssOptions: {
-                  plugins: ['autoprefixer'],
-                },
-              },
-            },
-            'sass-loader',
-          ],
         },
       ],
     },

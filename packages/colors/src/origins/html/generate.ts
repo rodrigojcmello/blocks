@@ -3,7 +3,7 @@
  * @see {@link https://github.com/ekelseya/colorNames/blob/master/colors.json}
  */
 import { colors } from './raw.json';
-import { formatColorTexts, writeColor } from '../utils';
+import { formatColorTexts, writeColor } from '../common';
 
 colors.forEach((color) => {
   formatColorTexts(color.name, color.hex, {
