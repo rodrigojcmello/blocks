@@ -42,7 +42,7 @@ overrides:
 
       # TypeScript
       - 'plugin:@typescript-eslint/recommended'
-      - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
+      # - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
       - plugin:import/typescript
 
       # Prettier
@@ -62,6 +62,12 @@ overrides:
       # no-use-before-define: off
 
       no-restricted-syntax: off
+
+      # Unicorn deal with it
+      '@typescript-eslint/prefer-regexp-exec': off
+
+      # It is much more practical to let the developer choose how he wants to export. This rule is very generic, a file is often used to create utilities and starts with just one method, adding more methods later, keeping it as export default only generates a boring and manual refactoring of subsequent imports
+      'import/prefer-default-export': off
 
       # ------------------------------------------------------------------------
       # Unicorn

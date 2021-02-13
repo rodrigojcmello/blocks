@@ -5,11 +5,11 @@
 import { colors } from './raw.json';
 import { formatColorTexts, writeColor } from '../common';
 
-colors.forEach((color) => {
+for (const color of colors) {
   formatColorTexts(color.name, color.hex, {
     name: 'html',
     code: color['html-name'],
   });
-});
+}
 
 writeColor('html');

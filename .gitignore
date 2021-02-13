@@ -2,9 +2,17 @@
 node_modules
 package-lock.json
 
+# Yarn
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
 # IDE
 .idea
 
 # Builds
-lib
-build
+**/lib
+**/dist

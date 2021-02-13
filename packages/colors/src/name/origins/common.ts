@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { exec } from 'child_process';
 import { Color, Origin } from './types';
-import { convertHexToHsl, convertHexToRgb } from '../hex';
+import { convertHexToHsl, convertHexToRgb } from '../../hex';
 
 let names: Color[] = [];
 
@@ -45,11 +45,11 @@ export function formatColorTexts(
   /**
    * Helps identify prepositions
    */
-  nameDone.split(' ').forEach((word) => {
+  for (const word of nameDone.split(' ')) {
     if (word.length <= 3) {
       console.log('short word', word, hex);
     }
-  });
+  }
 
   if (!RGB || !HSL) {
     console.log('Invalid HEX', { hex, RGB, HSL });
