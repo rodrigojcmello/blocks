@@ -1,8 +1,8 @@
 {
-  "name": "@flex-ui/colors",
+  "name": "@element-design/colors",
   "version": "0.0.1",
   "description": "",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "keywords": [
     "rgb",
     "hex",

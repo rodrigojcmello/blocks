@@ -5,6 +5,7 @@ import { HSLType } from '../hsl/types';
  * @see {@link https://www.rapidtables.com/convert/color/rgb-to-hsl.html}
  */
 
+// eslint-disable-next-line import/prefer-default-export
 export function convertRgbToHsl(RGB: RGBType): false | HSLType {
   const red = RGB[0] / 255;
   const green = RGB[1] / 255;

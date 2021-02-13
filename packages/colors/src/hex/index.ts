@@ -55,7 +55,7 @@ export function convertHexToHsl(hex: string): HSLType | false {
  * @see {@link https://en.wikipedia.org/wiki/Color_difference}
  */
 
-export function findColorName(HEX: string): any {
+export function findColorName(HEX: string): ClosestColor | false {
   const RGB1 = convertHexToRgb(HEX);
   if (RGB1) {
     const R1 = RGB1[0];

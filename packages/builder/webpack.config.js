@@ -1,13 +1,13 @@
+/* eslint-disable unicorn/prevent-abbreviations, no-console */
 const path = require('path');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
-module.exports = (env = { NODE_ENV: 'development' }) => {
-  const prod = env.NODE_ENV === 'production';
+module.exports = (env) => {
+  const prod = env?.NODE_ENV === 'production';
 
-  // eslint-disable-next-line no-console
   console.log(`MODE: ${prod ? 'PRODUCTION' : 'DEVELOPMENT'}`);
 
   return {
@@ -20,7 +20,14 @@ module.exports = (env = { NODE_ENV: 'development' }) => {
     devtool: 'source-map',
     ...(prod
       ? {}
-      : { devServer: { historyApiFallback: true, hot: true, hotOnly: true } }),
+      : {
+          devServer: {
+            historyApiFallback: true,
+            hot: true,
+            hotOnly: true,
+            writeToDisk: true,
+          },
+        }),
     plugins: [
       // HTML Template
       new HtmlWebpackPlugin({ template: './index.html' }),
@@ -41,7 +48,7 @@ module.exports = (env = { NODE_ENV: 'development' }) => {
     module: {
       rules: [
         {
-          test: /\.([tj])sx?$/,
+          test: /\.([jt])sx?$/,
           use: [
             {
               loader: 'babel-loader',

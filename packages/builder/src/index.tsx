@@ -1,15 +1,15 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import shader from 'shader';
 import { v4 as uuid } from 'uuid';
+import {
+  convertHslToHex,
+  convertHexToHsl,
+  findColorName,
+} from '@element-design/colors';
 import ColorBox, { Color } from './components/ColorBox';
 import TextField from './components/TextField';
 import ShadeItem from './components/ShadeItem';
 import HashField from './components/HashField';
-import {
-  HEXtoHSL,
-  HSLtoHeX,
-  colorName as findColorName,
-} from '../../util/color';
 // import './style.scss';
 
 const Colors: FC = () => {
@@ -33,7 +33,7 @@ const Colors: FC = () => {
 
     const newColorList: Color[] = [];
     for (const [i, newShade] of newShades.entries()) {
-      const hsl = HEXtoHSL(newShade);
+      const hsl = convertHexToHsl(newShade);
       if (hsl) {
         newColorList.push({
           id: uuid(),
@@ -64,7 +64,7 @@ const Colors: FC = () => {
       } else {
         newShades[index].hsl[letter] = ValueNumber / 100;
       }
-      const hex = HSLtoHeX(newShades[index].hsl);
+      const hex = convertHslToHex(newShades[index].hsl);
       if (hex) {
         newShades[index].hex = hex;
         setShades(newShades);
@@ -79,7 +79,7 @@ const Colors: FC = () => {
     }
     const newShades = [...shades];
     newShades[index].hex = newHex;
-    const hsl = HEXtoHSL(newHex);
+    const hsl = convertHexToHsl(newHex);
     if (hsl) {
       newShades[index].hsl = hsl;
       setShades(newShades);
