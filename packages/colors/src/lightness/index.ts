@@ -7,28 +7,29 @@ function getLightnessRadio(
   lighter = 5,
   darker = 95
 ) {
-  const y = [];
+  const scale = [];
   const lightRange = (lightness - lighter) / range;
-  for (let i = lighter; i < lightness; i += lightRange) {
-    y.push(Math.round(i));
+  for (let i = lighter; Math.round(i) < lightness; i += lightRange) {
+    scale.push(Math.round(i));
   }
   const darkRange = (darker - lightness) / range;
-  for (let i = lightness; i <= darker + 0.99; i += darkRange) {
-    y.push(Math.round(i));
+  for (let i = lightness; Math.round(i) <= darker + 1; i += darkRange) {
+    scale.push(Math.round(i));
   }
-  return y;
+  return scale.reverse();
 }
 
-function getLightnessColor(hex: string) {
+export function getLightnessColor(hex: string): false | string[] {
   const hsl = convertHexToHsl(hex);
   if (hsl) {
-    const lightness = hsl[2];
-    const shader = getLightnessRadio(lightness)
-      .map((value): string | false => {
-        const x = hsl;
-        x[2] = value;
-        return convertHslToHex(x);
+    const originalLightness = hsl[2];
+    return getLightnessRadio(originalLightness)
+      .map((lightness): string | false => {
+        const newHsl = hsl;
+        newHsl[2] = lightness;
+        return convertHslToHex(newHsl);
       })
-      .filter(Boolean);
+      .filter(Boolean) as string[];
   }
+  return false;
 }

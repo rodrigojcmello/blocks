@@ -1,5 +1,4 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import shader from 'shader';
 import { v4 as uuid } from 'uuid';
 import {
   convertHslToHex,
@@ -10,6 +9,7 @@ import ColorBox, { Color } from './components/ColorBox';
 import TextField from './components/TextField';
 import ShadeItem from './components/ShadeItem';
 import HashField from './components/HashField';
+import { getLightnessColor } from '../../colors/src';
 // import './style.scss';
 
 const Colors: FC = () => {
@@ -18,34 +18,30 @@ const Colors: FC = () => {
   const [shades, setShades] = useState<Color[]>([]);
 
   useEffect(() => {
-    setColorName(findColorName(hexColor).name);
+    const color = findColorName(hexColor);
+    if (color) {
+      setColorName(color.name);
 
-    // console.log('### lib', ColorHelper.findClosestColor(hexColor).name);
-    console.log('### custom', findColorName(hexColor));
+      const newShades = getLightnessColor(hexColor);
 
-    const newShades = [shader(hexColor, 0).toUpperCase()];
+      if (newShades) {
+        const newColorList: Color[] = [];
+        for (const [index, shade] of newShades.entries()) {
+          const hsl = convertHexToHsl(shade);
+          if (hsl) {
+            newColorList.push({
+              id: uuid(),
+              hex: shade,
+              hsl,
+              token: `green-${index}`,
+              elements: 0,
+            });
+          }
+        }
 
-    const x = 0.15;
-    for (let i = x; i < 1; i += x) {
-      newShades.unshift(shader(hexColor, i).toUpperCase());
-      newShades.push(shader(hexColor, -i).toUpperCase());
-    }
-
-    const newColorList: Color[] = [];
-    for (const [i, newShade] of newShades.entries()) {
-      const hsl = convertHexToHsl(newShade);
-      if (hsl) {
-        newColorList.push({
-          id: uuid(),
-          hex: newShade,
-          hsl,
-          token: `green-${i}`,
-          elements: 0,
-        });
+        setShades(newColorList);
       }
     }
-
-    setShades(newColorList);
   }, [hexColor]);
 
   const changeMainColor = (event: ChangeEvent<HTMLInputElement>) => {
@@ -143,7 +139,6 @@ const Colors: FC = () => {
               value={Math.round(shade.hsl[3] * 100)
                 .toString()
                 .replace(/^0+/, '')}
-              textAlign="center"
               min="0"
               max="100"
               onChange={(event) => {

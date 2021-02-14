@@ -1456,35 +1456,19 @@ __metadata:
     "@babel/preset-react": ^7.12.10
     "@babel/preset-typescript": ^7.12.7
     "@element-design/colors": ^0.0.1
-    "@element-design/eslint-config": "workspace:packages/eslint"
     "@pmmmwh/react-refresh-webpack-plugin": ^0.4.3
     "@types/react": ^17.0.0
     "@types/react-dom": ^17.0.0
     "@types/styled-components": ^5.1.7
     "@types/uuid": ^8.3.0
-    "@typescript-eslint/eslint-plugin": ^4.15.0
-    "@typescript-eslint/parser": ^4.15.0
     babel-loader: ^8.2.2
     clean-webpack-plugin: ^3.0.0
     electron: ^11.2.2
-    eslint: ^7.20.0
-    eslint-config-airbnb: ^18.2.1
-    eslint-config-airbnb-base: ^14.2.1
-    eslint-config-prettier: ^7.2.0
-    eslint-import-resolver-node: ^0.3.4
-    eslint-plugin-import: ^2.22.1
-    eslint-plugin-jest-dom: ^3.6.5
-    eslint-plugin-jsx-a11y: ^6.4.1
-    eslint-plugin-only-error: ^1.0.2
-    eslint-plugin-prettier: ^3.3.1
-    eslint-plugin-react: ^7.22.0
-    eslint-plugin-react-hooks: ^4.2.0
-    eslint-plugin-unicorn: ^27.0.0
     html-webpack-plugin: ^4.5.1
-    prettier: ^2.2.1
     react: ^17.0.1
     react-dom: ^17.0.1
-    shader: ^1.0.0
+    react-is: ^17.0.1
+    react-refresh: ^0.9.0
     styled-components: ^5.2.1
     typescript: ^4.1.5
     uuid: ^3.4.0
@@ -7987,6 +7971,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"react-refresh@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "react-refresh@npm:0.9.0"
+  checksum: 300dc431389f4c532bdfec08d5bc59b591c8c440486a7d5770c8954adf3afe62501b659c5acbdb7831751e8be506eb90a6f72491fab40352f3b3fba16897acf6
+  languageName: node
+  linkType: hard
+
 "react@npm:^17.0.1":
   version: 17.0.1
   resolution: "react@npm:17.0.1"
@@ -8744,13 +8735,6 @@ fsevents@^1.2.7:
   version: 1.1.1
   resolution: "setprototypeof@npm:1.1.1"
   checksum: 0efed4da5aec7535828ac07c3b560f0a54257a4a7d5390ffabe5530a083974aef577651507974215edb92a51efa142f22fb3242e24d630ba6adcbfc9e7f1ff2b
-  languageName: node
-  linkType: hard
-
-"shader@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "shader@npm:1.0.0"
-  checksum: abb08c4b56f395f1c1ff2bde5b90eec7a3bfff66782a94ede6592253a3356fb914e08ad05cb75d9f426b7edc249158899082ea8a80030fa8bb01abfdbff29872
   languageName: node
   linkType: hard
 
