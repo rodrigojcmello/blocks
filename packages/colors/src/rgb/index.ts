@@ -6,7 +6,7 @@ import { HSLType } from '../hsl/types';
  */
 
 // eslint-disable-next-line import/prefer-default-export
-export function convertRgbToHsl(RGB: RGBType): false | HSLType {
+export function convertRgbToHsl(RGB: RGBType):   false | HSLType {
   const red = RGB[0] / 255;
   const green = RGB[1] / 255;
   const blue = RGB[2] / 255;
