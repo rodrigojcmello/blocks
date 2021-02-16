@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const CircularDependencyPlugin = require('circular-dependency-plugin');
 
 module.exports = (env) => {
   const prod = env?.NODE_ENV === 'production';
@@ -29,10 +30,17 @@ module.exports = (env) => {
           },
         }),
     plugins: [
-      // HTML Template
+      // HTML Template. Default: src/index.ejs
       new HtmlWebpackPlugin(),
 
-      // Clean old build
+      // Detect modules with circular dependencies
+      new CircularDependencyPlugin({
+        onDetected({ paths, compilation }) {
+          compilation.errors.push(new Error(paths.join(' -> ')));
+        },
+      }),
+
+      // Clean build folder
       prod && new CleanWebpackPlugin(),
 
       // Show progress build in terminal

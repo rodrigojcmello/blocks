@@ -1462,6 +1462,7 @@ __metadata:
     "@types/styled-components": ^5.1.7
     "@types/uuid": ^8.3.0
     babel-loader: ^8.2.2
+    circular-dependency-plugin: ^5.2.2
     clean-webpack-plugin: ^3.0.0
     electron: ^11.2.3
     html-webpack-plugin: ^5.1.0
@@ -3104,6 +3105,15 @@ __metadata:
   version: 2.0.0
   resolution: "ci-info@npm:2.0.0"
   checksum: 553fe83c085fce5e19e20f85b993f24a463e6f805803837a8868607bb68b1300567868694a5dff1beca6c54926a4c0be1cc9ef0c35f810653d590bf64183f6a0
+  languageName: node
+  linkType: hard
+
+"circular-dependency-plugin@npm:^5.2.2":
+  version: 5.2.2
+  resolution: "circular-dependency-plugin@npm:5.2.2"
+  peerDependencies:
+    webpack: ">=4.0.1"
+  checksum: 1f6063947017b6b4e4c2111cd097a5bd33e46a20beab07717b2a378641f49c9a5627f89c3e1afee01b032d9758865f61e1c0c11cfc3acaa81068ce900c1cdb81
   languageName: node
   linkType: hard
 
