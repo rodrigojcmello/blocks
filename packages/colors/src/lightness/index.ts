@@ -77,7 +77,6 @@ export const relativeLuminance: RelativeLuminance = function (rgb) {
 /**
  * @see {@link https://www.w3.org/TR/WCAG20/#larger-scaledef}
  */
-
 export const contrastScore: ContrastScore = function (
   contrast,
   fontSize,
