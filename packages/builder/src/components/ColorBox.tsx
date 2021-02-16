@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { HSL } from '../../../colors/src/hsl/types';
+import { HSL } from '../../../colors/src/types';
 
 export interface Color {
   id: string;

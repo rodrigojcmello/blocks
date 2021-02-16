@@ -1,11 +1,6 @@
-import { RGB } from '../rgb/types';
-import { HSL } from './types';
+import { ConvertHslToHex, ConvertHslToRgb, ValidateHsl } from './types';
 
-// -----------------------------------------------------------------------------
-// sRGB - standard RGB (Red, Green, Blue)
-// -----------------------------------------------------------------------------
-
-export function validateHsl(hsl: HSL): boolean {
+export const validateHsl: ValidateHsl = function (hsl) {
   const hue = hsl[0];
   const saturation = hsl[1];
   const lightness = hsl[2];
@@ -21,9 +16,9 @@ export function validateHsl(hsl: HSL): boolean {
     alpha >= 0 &&
     alpha <= 1
   );
-}
+};
 
-export function convertHslToRgb(hsl: HSL): RGB | false {
+export const convertHslToRgb: ConvertHslToRgb = function (hsl) {
   if (validateHsl(hsl)) {
     const h = hsl[0];
     let s = hsl[1];
@@ -74,11 +69,10 @@ export function convertHslToRgb(hsl: HSL): RGB | false {
     return [red, green, blue, alpha];
   }
   return false;
-}
+};
 
-export function convertHslToHex(hsl: HSL): string | false {
+export const convertHslToHex: ConvertHslToHex = function (hsl) {
   const rgb = convertHslToRgb(hsl);
-
   if (rgb) {
     let red = rgb[0].toString(16);
     let green = rgb[1].toString(16);
@@ -92,4 +86,4 @@ export function convertHslToHex(hsl: HSL): string | false {
     return `#${red}${green}${blue}${alpha}`.toUpperCase();
   }
   return false;
-}
+};

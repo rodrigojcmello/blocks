@@ -1,4 +1,4 @@
-import { ClosestColor } from './types';
+import { ClosestColor, FindColorName } from './types';
 import pantone from './origins/pantone/pantone';
 import crayola from './origins/crayola/crayola';
 import html from './origins/html/html';
@@ -8,13 +8,12 @@ import { convertHexToRgb } from '../hex';
 /**
  * @see {@link https://en.wikipedia.org/wiki/Color_difference}
  */
-
-export function findColorName(HEX: string): ClosestColor | false {
-  const RGB1 = convertHexToRgb(HEX);
-  if (RGB1) {
-    const R1 = RGB1[0];
-    const G1 = RGB1[1];
-    const B1 = RGB1[2];
+export const findColorName: FindColorName = function (hexColor) {
+  const rgb1 = convertHexToRgb(hexColor);
+  if (rgb1) {
+    const R1 = rgb1[0];
+    const G1 = rgb1[1];
+    const B1 = rgb1[2];
 
     let closestColor: ClosestColor = {
       distance: Number.POSITIVE_INFINITY,
@@ -29,11 +28,11 @@ export function findColorName(HEX: string): ClosestColor | false {
     let closestColors: ClosestColor[] = [];
 
     for (const color of [...pantone, ...crayola, ...html] as Color[]) {
-      const RGB2 = convertHexToRgb(color.hex);
-      if (RGB2) {
-        const R2 = RGB2[0];
-        const G2 = RGB2[1];
-        const B2 = RGB2[2];
+      const rgb2 = convertHexToRgb(color.hex);
+      if (rgb2) {
+        const R2 = rgb2[0];
+        const G2 = rgb2[1];
+        const B2 = rgb2[2];
 
         const distance = Math.sqrt(
           (R1 - R2) ** 2 + (G1 - G2) ** 2 + (B1 - B2) ** 2
@@ -59,4 +58,4 @@ export function findColorName(HEX: string): ClosestColor | false {
     return closestColor;
   }
   return false;
-}
+};

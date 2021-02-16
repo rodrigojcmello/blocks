@@ -1,23 +1,31 @@
-import { RGB } from '../rgb/types';
 import { convertRgbToHsl } from '../rgb';
-import { HSL } from '../hsl/types';
+import { ConvertHexToHsl, ConvertHexToRgb, ValidateHexColor } from './types';
 
 /**
  * @see {@link https://www.w3.org/TR/css-color-4/#hex-notation}
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Numbers_and_dates#hexadecimal_numbers}
  */
 
-export function validateHexColor(hex: string): boolean {
-  return /^((0x)?|#?)([\dA-Fa-f]{8}|[\dA-Fa-f]{6}|[\dA-Fa-f]{3,4})$/.test(hex);
-}
+export const validateHexColor: ValidateHexColor = function (hexColor) {
+  return /^(0x|#)?([\da-f]{8}|[\da-f]{6}|[\da-f]{3,4})$/i.test(hexColor);
+};
 
-export function convertHexToRgb(hexColor: string): false | RGB {
+export const convertHexToRgb: ConvertHexToRgb = function (hexColor) {
   if (validateHexColor(hexColor)) {
     let red = 0;
     let green = 0;
     let blue = 0;
     let alpha = 1;
 
-    const hex = hexColor.slice(1);
+    let hex = '';
+
+    if (/^(0x)/i.test(hexColor)) {
+      hex = hexColor.slice(2);
+    } else if (/^(#)/.test(hexColor)) {
+      hex = hexColor.slice(1);
+    } else {
+      hex = hexColor;
+    }
 
     if (hex.length === 6 || hex.length === 8) {
       red = Number.parseInt(`${hex[0]}${hex[1]}`, 16);
@@ -38,10 +46,10 @@ export function convertHexToRgb(hexColor: string): false | RGB {
     return [red, green, blue, alpha];
   }
   return false;
-}
+};
 
-export function convertHexToHsl(hex: string): HSL | false {
-  const rgb = convertHexToRgb(hex);
+export const convertHexToHsl: ConvertHexToHsl = function (hexColor) {
+  const rgb = convertHexToRgb(hexColor);
   if (rgb) return convertRgbToHsl(rgb);
   return false;
-}
+};

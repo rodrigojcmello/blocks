@@ -1,5 +1,4 @@
-import { RGB } from '../../rgb/types';
-import { HSL } from '../../hsl/types';
+import { HSL, RGB } from '../../types';
 
 export interface Origin {
   name: string;

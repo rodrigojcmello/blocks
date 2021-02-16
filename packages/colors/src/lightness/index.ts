@@ -45,10 +45,10 @@ export function getLightnessColor(hex: string): false | string[] {
 /**
  * @see {@link https://www.w3.org/TR/WCAG20/#contrast-ratiodef}
  */
-export const contrastRatio: ContrastRatio = (
+export const contrastRatio: ContrastRatio = function (
   relativeLuminance1,
   relativeLuminance2
-) => {
+) {
   const lighter = Math.max(relativeLuminance1, relativeLuminance2);
   const darker = Math.min(relativeLuminance1, relativeLuminance2);
   return (lighter + 0.05) / (darker + 0.05);
@@ -58,7 +58,7 @@ export const contrastRatio: ContrastRatio = (
  * @see {@link https://www.w3.org/TR/WCAG20/#relativeluminancedef}
  * @see {@link https://en.wikipedia.org/wiki/Rec._709#Luma_coefficients}
  */
-export const relativeLuminance: RelativeLuminance = (rgb) => {
+export const relativeLuminance: RelativeLuminance = function (rgb) {
   const RsRGB = rgb[0] / 255;
   const GsRGB = rgb[1] / 255;
   const BsRGB = rgb[2] / 255;
@@ -78,7 +78,11 @@ export const relativeLuminance: RelativeLuminance = (rgb) => {
  * @see {@link https://www.w3.org/TR/WCAG20/#larger-scaledef}
  */
 
-export const contrastScore: ContrastScore = (contrast, fontSize, bold) => {
+export const contrastScore: ContrastScore = function (
+  contrast,
+  fontSize,
+  bold
+) {
   let score = 'fail';
 
   if (contrast >= 3) {
@@ -97,7 +101,7 @@ export const contrastScore: ContrastScore = (contrast, fontSize, bold) => {
   return score;
 };
 
-export const colorContrast: ColorContrast = (colorHex1, colorHex2) => {
+export const colorContrast: ColorContrast = function (colorHex1, colorHex2) {
   const rgb1 = convertHexToRgb(colorHex1);
   const rgb2 = convertHexToRgb(colorHex2);
   if (rgb1 && rgb2) {

@@ -1,1 +1,3 @@
-export type RGB = [red: number, green: number, blue: number, alpha: number];
+import { HSL, RGB } from '../types';
+
+export type ConvertRgbToHsl = (rgb: RGB) => false | HSL;

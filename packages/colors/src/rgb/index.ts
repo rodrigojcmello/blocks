@@ -1,16 +1,13 @@
-import { RGB } from './types';
-import { HSL } from '../hsl/types';
+import { ConvertRgbToHsl } from './types';
 
 /**
  * @see {@link https://www.rapidtables.com/convert/color/rgb-to-hsl.html}
  */
-
-// eslint-disable-next-line import/prefer-default-export
-export function convertRgbToHsl(RGB: RGB): false | HSL {
-  const red = RGB[0] / 255;
-  const green = RGB[1] / 255;
-  const blue = RGB[2] / 255;
-  const alpha = RGB[3];
+export const convertRgbToHsl: ConvertRgbToHsl = function (rgb) {
+  const red = rgb[0] / 255;
+  const green = rgb[1] / 255;
+  const blue = rgb[2] / 255;
+  const alpha = rgb[3];
 
   const cMin = Math.min(red, green, blue);
   const cMax = Math.max(red, green, blue);
@@ -38,4 +35,4 @@ export function convertRgbToHsl(RGB: RGB): false | HSL {
   lightness = Math.round(lightness * 100);
 
   return [hue, saturation, lightness, alpha];
-}
+};

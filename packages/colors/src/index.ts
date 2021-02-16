@@ -1,4 +1,5 @@
 export * from './hex';
+export * from './hex/types';
 export * from './hsl';
 export * from './hsl/types';
 export * from './rgb';

@@ -1,4 +1,4 @@
-import { RGB } from '../rgb/types';
+import { RGB } from '../types';
 
 export type ContrastRatio = (a: number, b: number) => number;
 

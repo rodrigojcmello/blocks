@@ -1,3 +1,30 @@
+const commonRules = {
+  //----------------------------------------------------------------------------
+  // CONFLICTS
+  //----------------------------------------------------------------------------
+
+  /**
+   * Prettier follows double quotes by default, but the Airbnb style guide
+   * recommends single quotes
+   * @see {@link https://github.com/airbnb/javascript#strings}
+   * @see {@link https://prettier.io/docs/en/options.html#quotes}
+   * @see {@link https://github.com/prettier/eslint-plugin-prettier#options}
+   */
+  'prettier/prettier': ['error', { singleQuote: true }],
+
+  /**
+   * Allow Function Expression
+   * @see {@link https://javascript.info/function-expressions}
+   * @see {@link https://www.typescriptlang.org/docs/handbook/functions.html#functions}
+   */
+  'func-names': ['error', 'as-needed'],
+
+  // /**
+  //  * @see {@link https://spin.atomicobject.com/2018/06/25/circular-dependencies-javascript/}
+  //  */
+  // 'import/no-cycle': 'off',
+};
+
 module.exports = {
   env: {
     node: true,
@@ -14,15 +41,7 @@ module.exports = {
   ],
   plugins: ['only-error'],
   rules: {
-    /**
-     * Prettier follows double quotes by default, but the Airbnb style guide
-     * recommends single quotes. The airbnb rule will be maintained since it is
-     * our chosen style guide
-     * @see {@link https://github.com/airbnb/javascript#strings}
-     * @see {@link https://prettier.io/docs/en/options.html#quotes}
-     * @see {@link https://github.com/prettier/eslint-plugin-prettier#options}
-     */
-    'prettier/prettier': ['error', { singleQuote: true }],
+    ...commonRules,
   },
   overrides: [
     {
@@ -156,6 +175,8 @@ module.exports = {
             devDependencies: ['**/*.test.tsx', '**/setupTests.ts'],
           },
         ],
+
+        ...commonRules,
       },
     },
   ],
