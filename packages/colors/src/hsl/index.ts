@@ -1,15 +1,15 @@
-import { RGBType } from '../rgb/types';
-import { HSLType } from './types';
+import { RGB } from '../rgb/types';
+import { HSL } from './types';
 
 // -----------------------------------------------------------------------------
 // sRGB - standard RGB (Red, Green, Blue)
 // -----------------------------------------------------------------------------
 
-export function validateHsl(HSL: HSLType): boolean {
-  const hue = HSL[0];
-  const saturation = HSL[1];
-  const lightness = HSL[2];
-  const alpha = HSL[3];
+export function validateHsl(hsl: HSL): boolean {
+  const hue = hsl[0];
+  const saturation = hsl[1];
+  const lightness = hsl[2];
+  const alpha = hsl[3];
 
   return (
     hue >= 0 &&
@@ -23,12 +23,12 @@ export function validateHsl(HSL: HSLType): boolean {
   );
 }
 
-export function convertHslToRgb(HSL: HSLType): RGBType | false {
-  if (validateHsl(HSL)) {
-    const h = HSL[0];
-    let s = HSL[1];
-    let l = HSL[2];
-    const alpha = HSL[3];
+export function convertHslToRgb(hsl: HSL): RGB | false {
+  if (validateHsl(hsl)) {
+    const h = hsl[0];
+    let s = hsl[1];
+    let l = hsl[2];
+    const alpha = hsl[3];
 
     s /= 100;
     l /= 100;
@@ -76,14 +76,14 @@ export function convertHslToRgb(HSL: HSLType): RGBType | false {
   return false;
 }
 
-export function convertHslToHex(HSL: HSLType): string | false {
-  const RGB = convertHslToRgb(HSL);
+export function convertHslToHex(hsl: HSL): string | false {
+  const rgb = convertHslToRgb(hsl);
 
-  if (RGB) {
-    let red = RGB[0].toString(16);
-    let green = RGB[1].toString(16);
-    let blue = RGB[2].toString(16);
-    const alpha = (RGB[3] === 1 ? '' : Math.round(RGB[3] * 255)).toString(16);
+  if (rgb) {
+    let red = rgb[0].toString(16);
+    let green = rgb[1].toString(16);
+    let blue = rgb[2].toString(16);
+    const alpha = (rgb[3] === 1 ? '' : Math.round(rgb[3] * 255)).toString(16);
 
     if (red.length === 1) red = `0${red}`;
     if (green.length === 1) green = `0${green}`;

@@ -11,7 +11,9 @@
     "convert",
     "name",
     "closest",
-    "find"
+    "find",
+    "WCAG",
+    "contrast"
   ],
   "author": "Rodrigo José Carvalho de Mello",
   "license": "ISC",

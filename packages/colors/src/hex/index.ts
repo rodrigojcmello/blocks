@@ -1,6 +1,6 @@
-import { RGBType } from '../rgb/types';
+import { RGB } from '../rgb/types';
 import { convertRgbToHsl } from '../rgb';
-import { HSLType } from '../hsl/types';
+import { HSL } from '../hsl/types';
 
 /**
  * @see {@link https://www.w3.org/TR/css-color-4/#hex-notation}
@@ -10,7 +10,7 @@ export function validateHexColor(hex: string): boolean {
   return /^((0x)?|#?)([\dA-Fa-f]{8}|[\dA-Fa-f]{6}|[\dA-Fa-f]{3,4})$/.test(hex);
 }
 
-export function convertHexToRgb(hexColor: string): false | RGBType {
+export function convertHexToRgb(hexColor: string): false | RGB {
   if (validateHexColor(hexColor)) {
     let red = 0;
     let green = 0;
@@ -40,7 +40,7 @@ export function convertHexToRgb(hexColor: string): false | RGBType {
   return false;
 }
 
-export function convertHexToHsl(hex: string): HSLType | false {
+export function convertHexToHsl(hex: string): HSL | false {
   const rgb = convertHexToRgb(hex);
   if (rgb) return convertRgbToHsl(rgb);
   return false;

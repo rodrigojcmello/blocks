@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import { HSLType } from '../../../util/color';
+import { HSL } from '../../../colors/src/hsl/types';
 
 export interface Color {
   id: string;
   hex: string;
-  hsl: HSLType;
+  hsl: HSL;
   token: string;
   elements: number;
+  contrastColor: string;
 }
 
 interface ColorBoxProps {

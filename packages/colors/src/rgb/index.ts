@@ -1,12 +1,12 @@
-import { RGBType } from './types';
-import { HSLType } from '../hsl/types';
+import { RGB } from './types';
+import { HSL } from '../hsl/types';
 
 /**
  * @see {@link https://www.rapidtables.com/convert/color/rgb-to-hsl.html}
  */
 
 // eslint-disable-next-line import/prefer-default-export
-export function convertRgbToHsl(RGB: RGBType):   false | HSLType {
+export function convertRgbToHsl(RGB: RGB): false | HSL {
   const red = RGB[0] / 255;
   const green = RGB[1] / 255;
   const blue = RGB[2] / 255;

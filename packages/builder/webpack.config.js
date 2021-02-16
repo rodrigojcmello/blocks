@@ -30,7 +30,7 @@ module.exports = (env) => {
         }),
     plugins: [
       // HTML Template
-      new HtmlWebpackPlugin({ template: './index.html' }),
+      new HtmlWebpackPlugin(),
 
       // Clean old build
       prod && new CleanWebpackPlugin(),

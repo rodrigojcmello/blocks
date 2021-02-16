@@ -9,7 +9,11 @@ import ColorBox, { Color } from './components/ColorBox';
 import TextField from './components/TextField';
 import ShadeItem from './components/ShadeItem';
 import HashField from './components/HashField';
-import { getLightnessColor } from '../../colors/src';
+import {
+  colorContrast,
+  contrastScore,
+  getLightnessColor,
+} from '../../colors/src';
 // import './style.scss';
 
 const Colors: FC = () => {
@@ -28,15 +32,23 @@ const Colors: FC = () => {
         const newColorList: Color[] = [];
         for (const [index, shade] of newShades.entries()) {
           const hsl = convertHexToHsl(shade);
-          if (hsl) {
+          const contrast1 = colorContrast(shade, '#000000');
+          const contrast2 = colorContrast(shade, '#FFFFFF');
+          console.log({ contrast1, contrast2, shade });
+          if (hsl && contrast1 && contrast2) {
             newColorList.push({
               id: uuid(),
               hex: shade,
               hsl,
               token: `green-${index}`,
               elements: 0,
+              contrastColor: contrast1 > contrast2 ? '#000000' : '#FFFFFF',
             });
           }
+          // if (contrast1 && contrast2) {
+          //   const score1 = contrastScore(contrast1, 14);
+          //   console.log({ contrast, score });
+          // }
         }
 
         setShades(newColorList);
@@ -103,7 +115,23 @@ const Colors: FC = () => {
       <div>
         {shades.map((shade, index) => (
           <ShadeItem key={shade.id}>
-            <ColorBox shade={shade} />
+            <ColorBox shade={shade}>
+              <div
+                style={{
+                  position: 'absolute',
+                  color: shade.contrastColor,
+                  height: 30,
+                  width: 30,
+                  zIndex: 1,
+                  textAlign: 'center',
+                  lineHeight: '30px',
+                  fontSize: 12,
+                  top: 0,
+                }}
+              >
+                {index}
+              </div>
+            </ColorBox>
             <HashField
               type="number"
               value={shade.hsl[0].toString().replace(/^0+/, '')}
