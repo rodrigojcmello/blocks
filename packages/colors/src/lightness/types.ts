@@ -1,6 +1,6 @@
-import { RGB } from '../types';
+import { HEX, RGB } from '../types';
 
-export type ContrastRatio = (a: number, b: number) => number;
+export type ContrastRatio = (L1: number, L2: number) => number;
 
 export type ColorContrast = (
   hexColor1: string,
@@ -14,3 +14,5 @@ export type ContrastScore = (
   fontSize: number,
   bold?: boolean
 ) => string;
+
+export type ColorShades = (hex: HEX) => false | HEX[];

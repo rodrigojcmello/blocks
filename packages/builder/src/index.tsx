@@ -4,16 +4,15 @@ import {
   convertHslToHex,
   convertHexToHsl,
   findColorName,
+  colorContrast,
+  contrastScore,
+  createTints,
 } from '@element-design/colors';
 import ColorBox, { Color } from './components/ColorBox';
 import TextField from './components/TextField';
 import ShadeItem from './components/ShadeItem';
 import HashField from './components/HashField';
-import {
-  colorContrast,
-  contrastScore,
-  getLightnessColor,
-} from '../../colors/src';
+
 // import './style.scss';
 
 const Colors: FC = () => {
@@ -26,7 +25,7 @@ const Colors: FC = () => {
     if (color) {
       setColorName(color.name);
 
-      const newShades = getLightnessColor(hexColor);
+      const newShades = createTints(hexColor);
 
       if (newShades) {
         const newColorList: Color[] = [];

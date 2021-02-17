@@ -6,3 +6,6 @@ export type HSL = [
   lightness: number,
   alpha: number
 ];
+
+/** Hexadecimal color */
+export type HEX = string;

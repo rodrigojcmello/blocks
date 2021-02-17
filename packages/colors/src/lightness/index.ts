@@ -2,34 +2,47 @@ import { convertHexToHsl, convertHexToRgb } from '../hex';
 import { convertHslToHex } from '../hsl';
 import {
   ColorContrast,
+  ColorShades,
   ContrastRatio,
   ContrastScore,
   RelativeLuminance,
 } from './types';
 
-function getLightnessRadio(
+function lightnessRange(
   lightness = 55,
-  range = 5,
-  lighter = 5,
-  darker = 95
-) {
-  const scale = [];
-  const lightRange = (lightness - lighter) / range;
-  for (let i = lighter; Math.round(i) < lightness; i += lightRange) {
-    scale.push(Math.round(i));
+  type = 'both',
+  amount = 10,
+  darker = 5,
+  lighter = 95
+): number[] {
+  const colors = [];
+  if (type === 'tint' || type === 'both') {
+    const lightRange = (lighter - lightness) / amount;
+    for (let i = lighter; Math.round(i) > lightness; i -= lightRange) {
+      colors.push(Math.round(i));
+    }
   }
-  const darkRange = (darker - lightness) / range;
-  for (let i = lightness; Math.round(i) <= darker + 1; i += darkRange) {
-    scale.push(Math.round(i));
+  colors.push(lightness);
+  if (type === 'shade' || type === 'both') {
+    const darkRange = (lightness - darker) / amount;
+    for (
+      let i = lightness - darkRange;
+      Math.round(i) >= darker;
+      i -= darkRange
+    ) {
+      colors.push(Math.round(i));
+    }
   }
-  return scale.reverse();
+  return colors;
 }
 
-export function getLightnessColor(hex: string): false | string[] {
+/**
+ * gerar tons de cores para você usar em suas interfaces
+ */
+export const createTints2: ColorShades = function (hex) {
   const hsl = convertHexToHsl(hex);
   if (hsl) {
-    const originalLightness = hsl[2];
-    return getLightnessRadio(originalLightness)
+    return lightnessRange(hsl[2])
       .map((lightness): string | false => {
         const newHsl = hsl;
         newHsl[2] = lightness;
@@ -38,24 +51,35 @@ export function getLightnessColor(hex: string): false | string[] {
       .filter(Boolean) as string[];
   }
   return false;
-}
+};
+
+export const createTints: ColorShades = function (hex) {
+  const hsl = convertHexToHsl(hex);
+  if (hsl) {
+    return lightnessRange(hsl[2], 'both')
+      .map((lightness): string | false => {
+        const newHsl = hsl;
+        newHsl[2] = lightness;
+        return convertHslToHex(newHsl);
+      })
+      .filter(Boolean) as string[];
+  }
+  return false;
+};
 
 // -----------------------------------------------------------------------------
 
 /**
- * @see {@link https://www.w3.org/TR/WCAG20/#contrast-ratiodef}
+ * @see {@link https://www.w3.org/WAI/GL/wiki/Contrast_ratio}
  */
-export const contrastRatio: ContrastRatio = function (
-  relativeLuminance1,
-  relativeLuminance2
-) {
-  const lighter = Math.max(relativeLuminance1, relativeLuminance2);
-  const darker = Math.min(relativeLuminance1, relativeLuminance2);
+export const contrastRatio: ContrastRatio = function (L1, L2) {
+  const lighter = Math.max(L1, L2);
+  const darker = Math.min(L1, L2);
   return (lighter + 0.05) / (darker + 0.05);
 };
 
 /**
- * @see {@link https://www.w3.org/TR/WCAG20/#relativeluminancedef}
+ * @see {@link https://www.w3.org/WAI/GL/wiki/Relative_luminance}
  * @see {@link https://en.wikipedia.org/wiki/Rec._709#Luma_coefficients}
  */
 export const relativeLuminance: RelativeLuminance = function (rgb) {
@@ -63,15 +87,11 @@ export const relativeLuminance: RelativeLuminance = function (rgb) {
   const GsRGB = rgb[1] / 255;
   const BsRGB = rgb[2] / 255;
 
-  const r = RsRGB <= 0.03928 ? RsRGB / 12.92 : RsRGB + 0.055 / 1.055 ** 2.4;
-  const g = GsRGB <= 0.03928 ? GsRGB / 12.92 : GsRGB + 0.055 / 1.055 ** 2.4;
-  const b = BsRGB <= 0.03928 ? BsRGB / 12.92 : BsRGB + 0.055 / 1.055 ** 2.4;
+  const R = RsRGB <= 0.03928 ? RsRGB / 12.92 : ((RsRGB + 0.055) / 1.055) ** 2.4;
+  const G = GsRGB <= 0.03928 ? GsRGB / 12.92 : ((GsRGB + 0.055) / 1.055) ** 2.4;
+  const B = BsRGB <= 0.03928 ? BsRGB / 12.92 : ((BsRGB + 0.055) / 1.055) ** 2.4;
 
-  const redCoefficient = 0.2126;
-  const greenCoefficient = 0.7152;
-  const blueCoefficient = 0.0722;
-
-  return r * redCoefficient + g * greenCoefficient + b * blueCoefficient;
+  return R * 0.2126 + G * 0.7152 + B * 0.0722;
 };
 
 /**
@@ -104,10 +124,9 @@ export const colorContrast: ColorContrast = function (colorHex1, colorHex2) {
   const rgb1 = convertHexToRgb(colorHex1);
   const rgb2 = convertHexToRgb(colorHex2);
   if (rgb1 && rgb2) {
-    const l1 = relativeLuminance(rgb1);
-    const l2 = relativeLuminance(rgb2);
-    // console.log({ l1, l2 });
-    return contrastRatio(l1, l2);
+    const L1 = relativeLuminance(rgb1);
+    const L2 = relativeLuminance(rgb2);
+    return contrastRatio(L1, L2);
   }
   return false;
 };
