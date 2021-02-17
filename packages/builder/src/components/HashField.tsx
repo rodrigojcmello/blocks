@@ -32,6 +32,17 @@ const Input = styled.input({
   marginRight: 8,
   color: '#333333',
   fontFamily: "'Titillium Web', sans-serif",
+  '&[type=number]': {
+    '-moz-appearance': 'textfield',
+  },
+  '&::-webkit-outer-spin-button': {
+    '-webkit-appearance': 'none',
+    margin: 0,
+  },
+  '&::-webkit-inner-spin-button': {
+    '-webkit-appearance': 'none',
+    margin: 0,
+  },
 });
 
 interface HashFieldProps extends InputHTMLAttributes<HTMLInputElement> {
