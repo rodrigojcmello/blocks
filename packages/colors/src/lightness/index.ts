@@ -2,64 +2,44 @@ import { convertHexToHsl, convertHexToRgb } from '../hex';
 import { convertHslToHex } from '../hsl';
 import {
   ColorContrast,
-  ColorShades,
   ContrastRatio,
   ContrastScore,
   RelativeLuminance,
+  ScaleLightness,
 } from './types';
 
-function lightnessRange(
-  lightness = 55,
+export const scaleLightness: ScaleLightness = function (
+  hex,
   type = 'both',
   amount = 10,
   darker = 5,
   lighter = 95
-): number[] {
-  const colors = [];
-  if (type === 'tint' || type === 'both') {
-    const lightRange = (lighter - lightness) / amount;
-    for (let i = lighter; Math.round(i) > lightness; i -= lightRange) {
-      colors.push(Math.round(i));
-    }
-  }
-  colors.push(lightness);
-  if (type === 'shade' || type === 'both') {
-    const darkRange = (lightness - darker) / amount;
-    for (
-      let i = lightness - darkRange;
-      Math.round(i) >= darker;
-      i -= darkRange
-    ) {
-      colors.push(Math.round(i));
-    }
-  }
-  return colors;
-}
-
-/**
- * gerar tons de cores para você usar em suas interfaces
- */
-export const createTints2: ColorShades = function (hex) {
+) {
   const hsl = convertHexToHsl(hex);
   if (hsl) {
-    return lightnessRange(hsl[2])
-      .map((lightness): string | false => {
+    const lightness = hsl[2];
+    const scale = [];
+    if (type === 'light' || type === 'both') {
+      const lightRange = (lighter - lightness) / amount;
+      for (let i = lighter; Math.round(i) > lightness; i -= lightRange) {
+        scale.push(Math.round(i));
+      }
+    }
+    scale.push(lightness);
+    if (type === 'dark' || type === 'both') {
+      const darkRange = (lightness - darker) / amount;
+      for (
+        let i = lightness - darkRange;
+        Math.round(i) >= darker;
+        i -= darkRange
+      ) {
+        scale.push(Math.round(i));
+      }
+    }
+    return scale
+      .map((l): string | false => {
         const newHsl = hsl;
-        newHsl[2] = lightness;
-        return convertHslToHex(newHsl);
-      })
-      .filter(Boolean) as string[];
-  }
-  return false;
-};
-
-export const createTints: ColorShades = function (hex) {
-  const hsl = convertHexToHsl(hex);
-  if (hsl) {
-    return lightnessRange(hsl[2], 'both')
-      .map((lightness): string | false => {
-        const newHsl = hsl;
-        newHsl[2] = lightness;
+        newHsl[2] = l;
         return convertHslToHex(newHsl);
       })
       .filter(Boolean) as string[];

@@ -15,4 +15,33 @@ export type ContrastScore = (
   bold?: boolean
 ) => string;
 
-export type ColorShades = (hex: HEX) => false | HEX[];
+export type ScaleLightness = (
+  /**
+   * Hexadecimal color
+   */
+  hex: HEX,
+
+  /**
+   * Define whether you want a lighter or darker lightness scale
+   * @default "both"
+   */
+  type?: 'both' | 'light' | 'dark',
+
+  /**
+   * amount of lightness scales you want
+   * @default "5"
+   */
+  amount?: number,
+
+  /**
+   * lightness scale between 0 (white) and 100 (black)
+   * @default "5"
+   */
+  darker?: number,
+
+  /**
+   * lightness scale between 0 (white) and 100 (black)
+   * @default "95"
+   */
+  lighter?: number
+) => HEX[] | false;

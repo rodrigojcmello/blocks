@@ -14,10 +14,13 @@ interface ColorBoxProps {
   shade: Color;
 }
 
+const checkeredSize = 3;
+const checkeredColor = '#bfbfbf';
+
 const ColorBox = styled.div<ColorBoxProps>(({ shade }) => ({
   height: 30,
   width: '100%',
-  borderRadius: 4,
+  borderRadius: 15,
 
   boxShadow: 'inset 0 0 0 1px #0000000d',
   position: 'relative',
@@ -28,11 +31,11 @@ const ColorBox = styled.div<ColorBoxProps>(({ shade }) => ({
     left: 0,
     top: 0,
     content: '" "',
+    borderRadius: 15,
     display: 'block',
-    backgroundImage:
-      'linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%)',
-    backgroundSize: '20px 20px',
-    backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+    backgroundImage: `linear-gradient(45deg, ${checkeredColor} 25%, transparent 25%), linear-gradient(-45deg, ${checkeredColor} 25%, transparent 25%), linear-gradient(45deg, transparent 75%, ${checkeredColor} 75%), linear-gradient(-45deg, transparent 75%, ${checkeredColor} 75%)`,
+    backgroundSize: `${checkeredSize * 2}px ${checkeredSize * 2}px`,
+    backgroundPosition: `0 0, 0 ${checkeredSize}px, ${checkeredSize}px -${checkeredSize}px, -${checkeredSize}px 0px`,
   },
   '&::after': {
     content: '" "',
@@ -41,6 +44,7 @@ const ColorBox = styled.div<ColorBoxProps>(({ shade }) => ({
     left: 0,
     width: 30,
     height: 30,
+    borderRadius: 15,
     backgroundColor: shade.hex,
   },
 }));

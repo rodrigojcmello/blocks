@@ -6,7 +6,7 @@ import {
   findColorName,
   colorContrast,
   contrastScore,
-  createTints,
+  scaleLightness,
 } from '@element-design/colors';
 import ColorBox, { Color } from './components/ColorBox';
 import TextField from './components/TextField';
@@ -18,28 +18,27 @@ import HashField from './components/HashField';
 const Colors: FC = () => {
   const [colorName, setColorName] = useState('');
   const [hexColor, setHexColor] = useState('#FA6400');
-  const [shades, setShades] = useState<Color[]>([]);
+  const [scale, setScale] = useState<Color[]>([]);
 
   useEffect(() => {
     const color = findColorName(hexColor);
     if (color) {
       setColorName(color.name);
 
-      const newShades = createTints(hexColor);
+      const newScale = scaleLightness(hexColor);
 
-      if (newShades) {
+      if (newScale) {
         const newColorList: Color[] = [];
-        for (const [index, shade] of newShades.entries()) {
+        for (const [index, shade] of newScale.entries()) {
           const hsl = convertHexToHsl(shade);
           const contrast1 = colorContrast(shade, '#000000');
           const contrast2 = colorContrast(shade, '#FFFFFF');
-          console.log({ contrast1, contrast2, shade });
           if (hsl && contrast1 && contrast2) {
             newColorList.push({
               id: uuid(),
               hex: shade,
               hsl,
-              token: `green-${index}`,
+              token: `green-${index + 1}`,
               elements: 0,
               contrastColor: contrast1 > contrast2 ? '#000000' : '#FFFFFF',
             });
@@ -50,7 +49,7 @@ const Colors: FC = () => {
           // }
         }
 
-        setShades(newColorList);
+        setScale(newColorList);
       }
     }
   }, [hexColor]);
@@ -65,7 +64,7 @@ const Colors: FC = () => {
       (letter === 0 && ValueNumber >= 0 && ValueNumber <= 360) ||
       (letter !== 0 && ValueNumber >= 0 && ValueNumber <= 100)
     ) {
-      const newShades = [...shades];
+      const newShades = [...scale];
       if (letter !== 3) {
         newShades[index].hsl[letter] = ValueNumber;
       } else {
@@ -74,7 +73,7 @@ const Colors: FC = () => {
       const hex = convertHslToHex(newShades[index].hsl);
       if (hex) {
         newShades[index].hex = hex;
-        setShades(newShades);
+        setScale(newShades);
       }
     }
   };
@@ -84,19 +83,19 @@ const Colors: FC = () => {
     if (!newHex.startsWith('#')) {
       newHex = `#${newHex}`;
     }
-    const newShades = [...shades];
+    const newShades = [...scale];
     newShades[index].hex = newHex;
     const hsl = convertHexToHsl(newHex);
     if (hsl) {
       newShades[index].hsl = hsl;
-      setShades(newShades);
     }
+    setScale(newShades);
   };
 
   const handleToken = (index: number, value: string) => {
-    const newShades = [...shades];
+    const newShades = [...scale];
     newShades[index].token = value;
-    setShades(newShades);
+    setScale(newShades);
   };
 
   return (
@@ -112,7 +111,7 @@ const Colors: FC = () => {
         <TextField type="text" defaultValue={colorName} textAlign="left" />
       </div>
       <div>
-        {shades.map((shade, index) => (
+        {scale.map((shade, index) => (
           <ShadeItem key={shade.id}>
             <ColorBox shade={shade}>
               <div
@@ -128,7 +127,7 @@ const Colors: FC = () => {
                   top: 0,
                 }}
               >
-                {index}
+                {index + 1}
               </div>
             </ColorBox>
             <HashField
