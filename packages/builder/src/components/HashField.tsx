@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ChangeEventHandler, FC, InputHTMLAttributes } from 'react';
+import { ChangeEventHandler, FC, InputHTMLAttributes, useState } from 'react';
 
 const HashFieldContainer = styled.div({
   height: 30,
@@ -10,6 +10,10 @@ const HashFieldContainer = styled.div({
   display: 'grid',
   gridTemplateColumns: '28px 1fr',
   border: '1px solid #F0F0F0',
+  '&.focus': {
+    backgroundColor: '#E5F4FF',
+    borderColor: '#D1EBFF',
+  },
 });
 
 const Character = styled.div({
@@ -29,11 +33,14 @@ const Input = styled.input({
   border: 'none',
   outline: 'none',
   textAlign: 'center',
-  marginRight: 8,
+  padding: 0,
   color: '#333333',
   fontFamily: "'Titillium Web', sans-serif",
   '&[type=number]': {
     '-moz-appearance': 'textfield',
+  },
+  '::selection': {
+    background: '#80C7FF',
   },
   '&::-webkit-outer-spin-button': {
     '-webkit-appearance': 'none',
@@ -57,10 +64,22 @@ const HashField: FC<HashFieldProps> = ({
   character,
   ...rest
 }) => {
+  const [focus, setFocus] = useState(false);
   return (
-    <HashFieldContainer>
+    <HashFieldContainer className={focus ? 'focus' : ''}>
       <Character>{character}</Character>
-      <Input type="text" value={value} onChange={onChange} {...rest} />
+      <Input
+        type="text"
+        value={value}
+        onChange={onChange}
+        {...rest}
+        onFocus={() => {
+          setFocus(true);
+        }}
+        onBlur={() => {
+          setFocus(false);
+        }}
+      />
     </HashFieldContainer>
   );
 };

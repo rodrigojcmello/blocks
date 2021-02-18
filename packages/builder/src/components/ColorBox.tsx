@@ -14,15 +14,13 @@ interface ColorBoxProps {
   shade: Color;
 }
 
-const checkeredSize = 3;
+const checkeredSize = 6;
 const checkeredColor = '#bfbfbf';
 
 const ColorBox = styled.div<ColorBoxProps>(({ shade }) => ({
   height: 30,
   width: '100%',
   borderRadius: 15,
-
-  boxShadow: 'inset 0 0 0 1px #0000000d',
   position: 'relative',
   '&::before': {
     position: 'absolute',
@@ -46,6 +44,7 @@ const ColorBox = styled.div<ColorBoxProps>(({ shade }) => ({
     height: 30,
     borderRadius: 15,
     backgroundColor: shade.hex,
+    boxShadow: 'inset 0 0 0 1px hsl(0deg 0% 0% / 5%)',
   },
 }));
 

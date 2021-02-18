@@ -13,11 +13,9 @@ import TextField from './components/TextField';
 import ShadeItem from './components/ShadeItem';
 import HashField from './components/HashField';
 
-// import './style.scss';
-
 const Colors: FC = () => {
   const [colorName, setColorName] = useState('');
-  const [hexColor, setHexColor] = useState('#FA6400');
+  const [hexColor, setHexColor] = useState('#6DD400');
   const [scale, setScale] = useState<Color[]>([]);
 
   useEffect(() => {
@@ -125,6 +123,7 @@ const Colors: FC = () => {
                   lineHeight: '30px',
                   fontSize: 12,
                   top: 0,
+                  opacity: 0.85,
                 }}
               >
                 {index + 1}
@@ -132,7 +131,7 @@ const Colors: FC = () => {
             </ColorBox>
             <HashField
               type="number"
-              value={shade.hsl[0].toString().replace(/^0+/, '')}
+              value={shade.hsl[0].toString()}
               min="0"
               max="360"
               onChange={(event) => {
@@ -142,7 +141,7 @@ const Colors: FC = () => {
             />
             <HashField
               type="number"
-              value={shade.hsl[1].toString().replace(/^0+/, '')}
+              value={shade.hsl[1].toString()}
               min="0"
               max="100"
               onChange={(event) => {
@@ -152,7 +151,7 @@ const Colors: FC = () => {
             />
             <HashField
               type="number"
-              value={shade.hsl[2].toString().replace(/^0+/, '')}
+              value={shade.hsl[2].toString()}
               min="0"
               max="100"
               onChange={(event) => {
