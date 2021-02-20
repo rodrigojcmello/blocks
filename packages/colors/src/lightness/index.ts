@@ -11,7 +11,7 @@ import {
 export const scaleLightness: ScaleLightness = function (
   hex,
   type = 'both',
-  amount = 10,
+  amount = 5,
   darker = 5,
   lighter = 95
 ) {

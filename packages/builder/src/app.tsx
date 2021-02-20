@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import ReactDOM from 'react-dom';
 import Colors from './index';
+import GlobalStyle from './GlobalStyle';
 
 // eslint-disable-next-line unicorn/consistent-function-scoping
 // const openModal = (): void => {
@@ -19,6 +20,7 @@ import Colors from './index';
 const App: FC = () => {
   return (
     <div>
+      <GlobalStyle />
       {/* <h1>Hello, world! 1234</h1> */}
       {/* <button type="button" onClick={openModal}> */}
       {/*  click */}

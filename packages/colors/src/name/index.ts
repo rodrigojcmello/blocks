@@ -59,3 +59,19 @@ export const findColorName: FindColorName = function (hexColor) {
   }
   return false;
 };
+
+/*
+00 = red - Red - Red
+30 = orange - Orange Circuit - Orange
+60 = yellow - Brilliant Yellow - Yellow
+90 = green - Chartreuse
+120 = green - Lime
+150 = green - Spring Green
+180 = blue - Aqua
+210 = blue - Blue
+240 = purple - Blue
+270 = violet - Dark Violet
+300 = magento - Fuchs Ia
+330 = pink - Deep Pink
+
+ */

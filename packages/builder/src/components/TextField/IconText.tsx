@@ -16,15 +16,14 @@ const HashFieldContainer = styled.div({
   },
 });
 
-const Character = styled.div({
+const Icon = styled.div({
   height: 28,
   backgroundColor: '#FFFFFF',
   borderRadius: 4,
   textAlign: 'center',
   lineHeight: '28px',
-  fontFamily: "'Titillium Web', sans-serif",
-  fontSize: 14,
-  color: '#333333',
+  fontSize: 12,
+  color: '#9A9A9A',
 });
 
 const Input = styled.input({
@@ -35,12 +34,8 @@ const Input = styled.input({
   textAlign: 'center',
   padding: 0,
   color: '#333333',
-  fontFamily: "'Titillium Web', sans-serif",
   '&[type=number]': {
     '-moz-appearance': 'textfield',
-  },
-  '::selection': {
-    background: '#80C7FF',
   },
   '&::-webkit-outer-spin-button': {
     '-webkit-appearance': 'none',
@@ -58,7 +53,7 @@ interface HashFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   character: string;
 }
 
-const HashField: FC<HashFieldProps> = ({
+const IconText: FC<HashFieldProps> = ({
   value,
   onChange,
   character,
@@ -67,7 +62,7 @@ const HashField: FC<HashFieldProps> = ({
   const [focus, setFocus] = useState(false);
   return (
     <HashFieldContainer className={focus ? 'focus' : ''}>
-      <Character>{character}</Character>
+      <Icon>{character}</Icon>
       <Input
         type="text"
         value={value}
@@ -84,4 +79,4 @@ const HashField: FC<HashFieldProps> = ({
   );
 };
 
-export default HashField;
+export default IconText;

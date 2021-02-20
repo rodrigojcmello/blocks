@@ -9,9 +9,9 @@ import {
   scaleLightness,
 } from '@element-design/colors';
 import ColorBox, { Color } from './components/ColorBox';
-import TextField from './components/TextField';
+import SimpleText from './components/TextField/SimpleText';
 import ShadeItem from './components/ShadeItem';
-import HashField from './components/HashField';
+import IconText from './components/TextField/IconText';
 
 const Colors: FC = () => {
   const [colorName, setColorName] = useState('');
@@ -26,6 +26,8 @@ const Colors: FC = () => {
       const newScale = scaleLightness(hexColor);
 
       if (newScale) {
+        const range = 800 / (newScale.length - 1);
+
         const newColorList: Color[] = [];
         for (const [index, shade] of newScale.entries()) {
           const hsl = convertHexToHsl(shade);
@@ -36,7 +38,7 @@ const Colors: FC = () => {
               id: uuid(),
               hex: shade,
               hsl,
-              token: `green-${index + 1}`,
+              token: `green-${Math.round(100 + range * index)}-for-light-theme`,
               elements: 0,
               contrastColor: contrast1 > contrast2 ? '#000000' : '#FFFFFF',
             });
@@ -100,13 +102,8 @@ const Colors: FC = () => {
     <div>
       <h1>Colors</h1>
       <div>
-        <TextField
-          type="text"
-          value={hexColor}
-          onChange={changeMainColor}
-          textAlign="center"
-        />
-        <TextField type="text" defaultValue={colorName} textAlign="left" />
+        <SimpleText type="text" value={hexColor} onChange={changeMainColor} />
+        <SimpleText type="text" defaultValue={colorName} />
       </div>
       <div>
         {scale.map((shade, index) => (
@@ -129,7 +126,7 @@ const Colors: FC = () => {
                 {index + 1}
               </div>
             </ColorBox>
-            <HashField
+            <IconText
               type="number"
               value={shade.hsl[0].toString()}
               min="0"
@@ -139,7 +136,7 @@ const Colors: FC = () => {
               }}
               character="H"
             />
-            <HashField
+            <IconText
               type="number"
               value={shade.hsl[1].toString()}
               min="0"
@@ -149,7 +146,7 @@ const Colors: FC = () => {
               }}
               character="S"
             />
-            <HashField
+            <IconText
               type="number"
               value={shade.hsl[2].toString()}
               min="0"
@@ -159,7 +156,7 @@ const Colors: FC = () => {
               }}
               character="L"
             />
-            <HashField
+            <IconText
               type="number"
               value={Math.round(shade.hsl[3] * 100)
                 .toString()
@@ -171,16 +168,15 @@ const Colors: FC = () => {
               }}
               character="A"
             />
-            <HashField
+            <IconText
               value={shade.hex.slice(1)}
               onChange={(event) => {
                 handleHex(index, event.currentTarget.value);
               }}
               character="#"
             />
-            <TextField
+            <SimpleText
               value={shade.token}
-              textAlign="left"
               onChange={(event) => {
                 handleToken(index, event.currentTarget.value);
               }}
