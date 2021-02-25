@@ -1,15 +1,15 @@
-/* eslint-disable unicorn/prevent-abbreviations, no-console */
 const path = require('path');
-const webpack = require('webpack');
+const { ProgressPlugin, HotModuleReplacementPlugin } = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 
-module.exports = (env) => {
-  const prod = env?.NODE_ENV === 'production';
+module.exports = (environment) => {
+  const production = environment?.NODE_ENV === 'production';
 
-  console.log(`MODE: ${prod ? 'PRODUCTION' : 'DEVELOPMENT'}`);
+  // eslint-disable-next-line no-console
+  console.log(`MODE: ${production ? 'PRODUCTION' : 'DEVELOPMENT'}`);
 
   return {
     entry: './src/app.tsx',
@@ -17,9 +17,9 @@ module.exports = (env) => {
       filename: '[name].[chunkhash].js',
       path: path.resolve(__dirname, 'dist'),
     },
-    mode: prod ? 'production' : 'development',
+    mode: production ? 'production' : 'development',
     devtool: 'source-map',
-    ...(prod
+    ...(production
       ? {}
       : {
           devServer: {
@@ -41,14 +41,14 @@ module.exports = (env) => {
       }),
 
       // Clean build folder
-      prod && new CleanWebpackPlugin(),
+      production && new CleanWebpackPlugin(),
 
       // Show progress build in terminal
-      !prod && new webpack.ProgressPlugin(),
+      !production && new ProgressPlugin(),
 
       // Fast Refresh
-      !prod && new webpack.HotModuleReplacementPlugin(),
-      !prod && new ReactRefreshWebpackPlugin(),
+      !production && new HotModuleReplacementPlugin(),
+      !production && new ReactRefreshWebpackPlugin(),
     ].filter(Boolean),
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
@@ -74,7 +74,7 @@ module.exports = (env) => {
                 ],
                 plugins: [
                   // Fast Refresh
-                  !prod && require.resolve('react-refresh/babel'),
+                  !production && require.resolve('react-refresh/babel'),
                 ].filter(Boolean),
                 cacheDirectory: true,
               },
