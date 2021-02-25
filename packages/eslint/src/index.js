@@ -1,30 +1,3 @@
-const commonRules = {
-  //----------------------------------------------------------------------------
-  // CONFLICTS
-  //----------------------------------------------------------------------------
-
-  /**
-   * Prettier follows double quotes by default, but the Airbnb style guide
-   * recommends single quotes
-   * @see {@link https://github.com/airbnb/javascript#strings}
-   * @see {@link https://prettier.io/docs/en/options.html#quotes}
-   * @see {@link https://github.com/prettier/eslint-plugin-prettier#options}
-   */
-  'prettier/prettier': ['error', { singleQuote: true }],
-
-  /**
-   * Allow Function Expression
-   * @see {@link https://javascript.info/function-expressions}
-   * @see {@link https://www.typescriptlang.org/docs/handbook/functions.html#functions}
-   */
-  'func-names': ['error', 'as-needed'],
-
-  // /**
-  //  * @see {@link https://spin.atomicobject.com/2018/06/25/circular-dependencies-javascript/}
-  //  */
-  // 'import/no-cycle': 'off',
-};
-
 module.exports = {
   env: {
     node: true,
@@ -41,7 +14,25 @@ module.exports = {
   ],
   plugins: ['only-error'],
   rules: {
-    ...commonRules,
+    //--------------------------------------------------------------------------
+    // CONFLICTS
+    //--------------------------------------------------------------------------
+
+    /**
+     * Prettier follows double quotes by default, but the Airbnb style guide
+     * recommends single quotes
+     * @see {@link https://github.com/airbnb/javascript#strings}
+     * @see {@link https://prettier.io/docs/en/options.html#quotes}
+     * @see {@link https://github.com/prettier/eslint-plugin-prettier#options}
+     */
+    'prettier/prettier': ['error', { singleQuote: true }],
+
+    /**
+     * Allow Function Expression
+     * @see {@link https://javascript.info/function-expressions}
+     * @see {@link https://www.typescriptlang.org/docs/handbook/functions.html#functions}
+     */
+    'func-names': ['error', 'as-needed'],
   },
   overrides: [
     {
@@ -76,8 +67,6 @@ module.exports = {
 
         // Prettier
         'plugin:prettier/recommended',
-        'prettier/react',
-        'prettier/@typescript-eslint',
       ],
 
       rules: {
@@ -133,11 +122,19 @@ module.exports = {
           },
         ],
 
-        'unicorn/prevent-abbreviations': 'off',
-
-        //----------------------------------------------------------------------
-        // React
-        //----------------------------------------------------------------------
+        /**
+         * keep the rule to prevent abbreviations, but with the exception of
+         * "props" because of React
+         * @see {@link https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prevent-abbreviations.md#whitelist}
+         */
+        'unicorn/prevent-abbreviations': [
+          'error',
+          {
+            whitelist: {
+              props: true,
+            },
+          },
+        ],
 
         /**
          * These PropTypes related rules are disabled in favor of using TypeScript
@@ -147,6 +144,10 @@ module.exports = {
          */
         'react/prop-types': 'off',
         'react/require-default-props': 'off',
+
+        //----------------------------------------------------------------------
+        // React
+        //----------------------------------------------------------------------
 
         /**
          * In the EcmaScript context this rule makes a lot of sense, since you
@@ -175,8 +176,6 @@ module.exports = {
             devDependencies: ['**/*.test.tsx', '**/setupTests.ts'],
           },
         ],
-
-        ...commonRules,
       },
     },
   ],
