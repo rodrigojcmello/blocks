@@ -1,3 +1,5 @@
 dist
+lib
 *.scss.d.ts
 *.css.d.ts
+styled-components
