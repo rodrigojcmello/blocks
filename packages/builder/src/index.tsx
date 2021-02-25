@@ -5,7 +5,6 @@ import {
   convertHexToHsl,
   findColorName,
   colorContrast,
-  contrastScore,
   scaleLightness,
   validateHexColor,
   cleanHex,

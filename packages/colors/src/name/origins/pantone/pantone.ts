@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 const pantone = [
   {
     name: 'Abbey Stone',

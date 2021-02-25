@@ -12,4 +12,5 @@ const command = `yarn add -D @element-design/eslint-config@^${
   packageJson.version
 } ${dependencies.join(' ')}`;
 
+// eslint-disable-next-line no-console
 console.log({ command });

@@ -53,6 +53,7 @@ export const findColorName: FindColorName = function (hexColor) {
       }
     }
 
+    // eslint-disable-next-line no-console
     console.log({ closestColors });
 
     return closestColor;

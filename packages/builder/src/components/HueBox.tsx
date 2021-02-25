@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-export interface HueBox {
+export interface HueBoxProps {
   backgroundSize: number;
   backgroundPosition: number;
   width?: number;
   color: string;
 }
 
-const HueBox = styled.div<HueBox>(
+const HueBox = styled.div<HueBoxProps>(
   ({ backgroundSize, backgroundPosition, width = 100, color }) => ({
     height: 30,
     width,

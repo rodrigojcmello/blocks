@@ -21,19 +21,23 @@ export const scaleLightness: ScaleLightness = function (
     const scale = [];
     if (type === 'light' || type === 'both') {
       const lightRange = (lighter - lightness) / amount;
-      for (let i = lighter; Math.round(i) > lightness; i -= lightRange) {
-        scale.push(Math.round(i));
+      for (
+        let index = lighter;
+        Math.round(index) > lightness;
+        index -= lightRange
+      ) {
+        scale.push(Math.round(index));
       }
     }
     scale.push(lightness);
     if (type === 'dark' || type === 'both') {
       const darkRange = (lightness - darker) / amount;
       for (
-        let i = lightness - darkRange;
-        Math.round(i) >= darker;
-        i -= darkRange
+        let index = lightness - darkRange;
+        Math.round(index) >= darker;
+        index -= darkRange
       ) {
-        scale.push(Math.round(i));
+        scale.push(Math.round(index));
       }
     }
     return scale
@@ -78,9 +82,9 @@ export const relativeLuminance: RelativeLuminance = function (rgb) {
  * @see {@link https://www.w3.org/TR/WCAG20/#larger-scaledef}
  */
 export const contrastScore: ContrastScore = function (
-  contrast,
-  fontSize,
-  bold
+  contrast
+  // fontSize,
+  // bold
 ) {
   let score = 'fail';
 
