@@ -123,15 +123,17 @@ module.exports = {
         ],
 
         /**
-         * keep the rule to prevent abbreviations, but with the exception of
+         * Keep the rule to prevent abbreviations, but with the exception of
          * "props" because of React
          * @see {@link https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prevent-abbreviations.md#whitelist}
+         * @see {@link https://reactjs.org/docs/render-props.html}
          */
         'unicorn/prevent-abbreviations': [
           'error',
           {
             whitelist: {
               props: true,
+              Props: true,
             },
           },
         ],
