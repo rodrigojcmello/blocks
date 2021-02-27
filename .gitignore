@@ -10,9 +10,15 @@ package-lock.json
 !.yarn/versions
 .pnp.*
 
+# Monorepo
+lerna-debug.log
+
 # IDE
 .idea
 
 # Builds
 **/lib
 **/dist
+
+# Test
+coverage

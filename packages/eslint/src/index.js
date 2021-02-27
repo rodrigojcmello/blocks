@@ -1,6 +1,7 @@
 module.exports = {
   env: {
     node: true,
+    jest: true,
   },
   extends: [
     // https://www.npmjs.com/package/eslint-config-airbnb-base
@@ -76,6 +77,7 @@ module.exports = {
 
         'max-lines': 'error',
         'no-restricted-syntax': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
 
         //----------------------------------------------------------------------
         // CONFLICTS

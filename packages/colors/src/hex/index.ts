@@ -1,6 +1,6 @@
 import { convertRgbToHsl } from '../rgb';
 import {
-  CleanHex,
+  RemoveHexPrefix,
   ConvertHexToHsl,
   ConvertHexToRgb,
   ValidateHexColor,
@@ -10,19 +10,15 @@ import {
  * @see {@link https://www.w3.org/TR/css-color-4/#hex-notation}
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Numbers_and_dates#hexadecimal_numbers}
  */
-
 export const validateHexColor: ValidateHexColor = function (hexColor) {
   return /^(0x|#)?([\da-f]{8}|[\da-f]{6}|[\da-f]{3,4})$/i.test(hexColor);
 };
 
-export const cleanHex: CleanHex = function (hexColor) {
-  if (/^(0x)/i.test(hexColor)) {
-    return hexColor.slice(2).toUpperCase();
-  }
-  if (/^(#)/.test(hexColor)) {
-    return hexColor.slice(1).toUpperCase();
-  }
-  return hexColor.toUpperCase();
+export const removeHexPrefix: RemoveHexPrefix = function (hexColor) {
+  let start = 0;
+  if (/^(0x)/i.test(hexColor)) start = 2;
+  if (/^(#)/.test(hexColor)) start = 1;
+  return hexColor.slice(start).toUpperCase();
 };
 
 export const convertHexToRgb: ConvertHexToRgb = function (hexColor) {
@@ -32,7 +28,7 @@ export const convertHexToRgb: ConvertHexToRgb = function (hexColor) {
     let blue = 0;
     let alpha = 1;
 
-    const hex = cleanHex(hexColor);
+    const hex = removeHexPrefix(hexColor);
 
     if (hex.length === 6 || hex.length === 8) {
       red = Number.parseInt(`${hex[0]}${hex[1]}`, 16);

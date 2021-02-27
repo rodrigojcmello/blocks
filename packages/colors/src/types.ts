@@ -1,5 +1,6 @@
 export type RGB = [red: number, green: number, blue: number, alpha: number];
 
+/** HSL color */
 export type HSL = [
   hue: number,
   saturation: number,
@@ -8,4 +9,4 @@ export type HSL = [
 ];
 
 /** Hexadecimal color */
-export type HEX = string;
+export type HexColor = string;

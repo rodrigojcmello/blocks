@@ -7,7 +7,7 @@ import {
   colorContrast,
   scaleLightness,
   validateHexColor,
-  cleanHex,
+  removeHexPrefix,
 } from '@element-design/colors';
 import ColorBox, { Color } from './components/ColorBox';
 import SimpleText from './components/TextField/SimpleText';
@@ -179,7 +179,7 @@ const Colors: FC = () => {
       <FormGrid>
         <IconText
           character="#"
-          value={cleanHex(hexColor)}
+          value={removeHexPrefix(hexColor)}
           onChange={changeMainColor}
         />
         <SimpleText type="text" defaultValue={colorName} />

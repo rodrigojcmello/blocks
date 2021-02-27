@@ -18,7 +18,7 @@
   "author": "Rodrigo José Carvalho de Mello",
   "license": "ISC",
   "scripts": {
-    "colors:build": "rimraf lib && tsc"
+    "colors:build": "rimraf lib && tsc --project tsconfig.build.json"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",

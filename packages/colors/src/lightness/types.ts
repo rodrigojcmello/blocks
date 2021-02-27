@@ -1,4 +1,4 @@
-import { HEX, RGB } from '../types';
+import { HexColor, RGB } from '../types';
 
 export type ContrastRatio = (L1: number, L2: number) => number;
 
@@ -19,7 +19,7 @@ export type ScaleLightness = (
   /**
    * Hexadecimal color
    */
-  hex: HEX,
+  hex: HexColor,
 
   /**
    * Define whether you want a lighter or darker lightness scale
@@ -44,4 +44,4 @@ export type ScaleLightness = (
    * @default "95"
    */
   lighter?: number
-) => HEX[] | false;
+) => HexColor[] | false;
