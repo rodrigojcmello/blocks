@@ -2193,15 +2193,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest-diff@npm:^24.3.0":
-  version: 24.3.0
-  resolution: "@types/jest-diff@npm:24.3.0"
-  dependencies:
-    jest-diff: "*"
-  checksum: 2e836791474ca308c45e055c12b783de0435f1e78f588e6b96bf34f06771eb41e6afeb1730f36dee15f2e81b478eba5b950e459be87ff97f34f1976411ff6cc1
-  languageName: node
-  linkType: hard
-
 "@types/jest@npm:26.x, @types/jest@npm:^26.0.20":
   version: 26.0.20
   resolution: "@types/jest@npm:26.0.20"
@@ -2288,15 +2279,6 @@ __metadata:
   version: 2.2.1
   resolution: "@types/prettier@npm:2.2.1"
   checksum: 9dc257dfc51eab6bc1e9ce58df94b309a206b2cdc6768709de3d20f70ae545c616bbc46add6d66f66cfa6cfbb0613dd09e6b6028ff6ff8ba9d3625f38d85cc66
-  languageName: node
-  linkType: hard
-
-"@types/pretty-format@npm:^24.3.0":
-  version: 24.3.0
-  resolution: "@types/pretty-format@npm:24.3.0"
-  dependencies:
-    pretty-format: "*"
-  checksum: af6b2810ffcea74bf9a50d6b95cf3378e22a57c02e66887df395df26656136e327ac7181b82f123f97bc2f3a86192967898140351deb89e94ccf901d5924202e
   languageName: node
   linkType: hard
 
@@ -7242,7 +7224,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"jest-diff@npm:*, jest-diff@npm:^26.0.0, jest-diff@npm:^26.6.2":
+"jest-diff@npm:^26.0.0, jest-diff@npm:^26.6.2":
   version: 26.6.2
   resolution: "jest-diff@npm:26.6.2"
   dependencies:
@@ -9374,7 +9356,7 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"pretty-format@npm:*, pretty-format@npm:^26.0.0, pretty-format@npm:^26.6.2":
+"pretty-format@npm:^26.0.0, pretty-format@npm:^26.6.2":
   version: 26.6.2
   resolution: "pretty-format@npm:26.6.2"
   dependencies:
@@ -10091,9 +10073,7 @@ fsevents@^2.1.2:
     "@commitlint/config-conventional": ^12.0.0
     "@element-design/eslint-config": "workspace:packages/eslint"
     "@types/jest": ^26.0.20
-    "@types/jest-diff": ^24.3.0
     "@types/node": ^14.14.31
-    "@types/pretty-format": ^24.3.0
     "@typescript-eslint/eslint-plugin": ^4.15.2
     "@typescript-eslint/parser": ^4.15.2
     eslint: ^7.20.0
