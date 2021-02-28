@@ -1,30 +1,34 @@
 import { FC } from 'react';
 import ReactDOM from 'react-dom';
+import { Dialog } from 'electron';
 import Colors from './index';
 import GlobalStyle from './GlobalStyle';
 
-// eslint-disable-next-line unicorn/consistent-function-scoping
-// const openModal = (): void => {
-//   console.log('##electron', window?.electron);
-//   window?.electron?.dialog();
-//   // window?.electron?.dialog?.showOpenDialog((fileNames) => {
-//   //   // fileNames is an array that contains all the selected
-//   //   if (fileNames === undefined) {
-//   //     console.log('No file selected');
-//   //   }
-//   //
-//   //   console.log({ fileNames });
-//   // });
-// };
+const electron = window.require('electron');
+const { remote } = electron;
+const { dialog } = remote;
+
+const openModal = (): void => {
+  (dialog as Dialog)
+    .showOpenDialog({
+      properties: ['openFile', 'openDirectory'],
+    })
+    .then((result) => {
+      console.log(result.canceled);
+      console.log(result.filePaths);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 const App: FC = () => {
   return (
     <div>
       <GlobalStyle />
-      {/* <h1>Hello, world! 1234</h1> */}
-      {/* <button type="button" onClick={openModal}> */}
-      {/*  click */}
-      {/* </button> */}
+      <button type="button" onClick={openModal}>
+        click
+      </button>
       <Colors />
     </div>
   );

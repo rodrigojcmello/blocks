@@ -175,7 +175,7 @@ const Colors: FC = () => {
         />
         {/* <HueBox backgroundSize={1200} backgroundPosition={-1250} /> */}
       </div>
-      <h1>Colors</h1>
+      <h1>Colors 2</h1>
       <FormGrid>
         <IconText
           character="#"

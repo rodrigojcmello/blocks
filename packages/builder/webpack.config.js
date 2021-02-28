@@ -17,6 +17,10 @@ module.exports = (environment) => {
       filename: '[name].[chunkhash].js',
       path: path.resolve(__dirname, 'dist'),
     },
+    // target: 'node',
+    // // node: {
+    // //   fs: 'empty',
+    // // },
     mode: production ? 'production' : 'development',
     devtool: 'source-map',
     ...(production

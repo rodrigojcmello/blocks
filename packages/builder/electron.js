@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const { app, BrowserWindow } = require('electron');
 
 function createWindow() {
@@ -7,7 +6,7 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
-      preload: `${__dirname}/preload.js`,
+      enableRemoteModule: true,
     },
   });
 

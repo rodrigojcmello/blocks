@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "name": "Queijo",
+  "colors": {
+    "red": [
+      {
+        "name": "red",
+        "scale": [{ "100": "#FFFFFF", "150": "#000000" }]
+      }
+    ]
+  }
+}
