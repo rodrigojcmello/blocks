@@ -4,16 +4,22 @@ module.exports = {
     jest: true,
   },
   extends: [
-    // https://www.npmjs.com/package/eslint-config-airbnb-base
+    /**
+     * @see {@link https://www.npmjs.com/package/eslint-config-airbnb-base}
+     */
     'airbnb-base',
 
-    // https://github.com/sindresorhus/eslint-plugin-unicorn
+    /**
+     * @see {@link https://github.com/sindresorhus/eslint-plugin-unicorn}
+     */
     'plugin:unicorn/recommended',
 
-    // https://github.com/prettier/eslint-plugin-prettier
+    /**
+     * @see {@link https://github.com/prettier/eslint-plugin-prettier}
+     */
     'plugin:prettier/recommended',
   ],
-  plugins: ['only-error'],
+  // plugins: ['only-error'],
   rules: {
     //--------------------------------------------------------------------------
     // CONFLICTS
@@ -22,7 +28,7 @@ module.exports = {
     /**
      * Prettier follows double quotes by default, but the Airbnb style guide
      * recommends single quotes
-     * @see {@link https://github.com/airbnb/javascript#strings}
+     * @see {@link https://github.com/airbnb/javascript#strings--quotes}
      * @see {@link https://prettier.io/docs/en/options.html#quotes}
      * @see {@link https://github.com/prettier/eslint-plugin-prettier#options}
      */
@@ -42,7 +48,7 @@ module.exports = {
         browser: true,
         es2020: true,
         jest: true,
-        node: false,
+        node: true,
       },
       parser: '@typescript-eslint/parser',
       parserOptions: {
@@ -71,14 +77,6 @@ module.exports = {
       ],
 
       rules: {
-        //----------------------------------------------------------------------
-        // RECOMMENDATIONS
-        //----------------------------------------------------------------------
-
-        'max-lines': 'error',
-        'no-restricted-syntax': 'off',
-        '@typescript-eslint/ban-ts-comment': 'off',
-
         //----------------------------------------------------------------------
         // CONFLICTS
         //----------------------------------------------------------------------
@@ -163,11 +161,13 @@ module.exports = {
          */
         'react/jsx-props-no-spreading': 'off',
 
+        /**
+         * @see {@link https://reactjs.org/blog/2020/10/20/react-v17.html#new-jsx-transform}
+         */
+        'react/react-in-jsx-scope': 'off',
+
         //----------------------------------------------------------------------
 
-        'import/prefer-default-export': 'off',
-
-        'react/react-in-jsx-scope': 'off',
         'import/extensions': [
           'error',
           {
@@ -180,6 +180,24 @@ module.exports = {
             devDependencies: ['**/*.test.tsx', '**/setupTests.ts'],
           },
         ],
+
+        //----------------------------------------------------------------------
+        // RECOMMENDATIONS
+        //----------------------------------------------------------------------
+
+        /**
+         * Limiting the number of lines helps to organize the code, a very large
+         * file may have too much responsibility being necessary to reorganize
+         * its logic in more modules
+         */
+        'max-lines': ['error', 500],
+
+        /**
+         * Some rules that in my humble opinion go beyond the domain of ESLint
+         */
+        'no-restricted-syntax': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
+        'import/prefer-default-export': 'off',
       },
     },
   ],
