@@ -1,12 +1,92 @@
 {
-  "version": "0.0.1",
-  "name": "Queijo",
-  "colors": {
-    "red": [
-      {
-        "name": "red",
-        "scale": [{ "100": "#FFFFFF", "150": "#000000" }]
-      }
-    ]
-  }
+  "colors": [
+    {
+      "id": "e1e8465b-3c7b-428a-b815-88d777d5d04a",
+      "hex": "#F3FFE5",
+      "hsl": [88, 100, 95, 1],
+      "token": "green-100-for-light-theme",
+      "elements": 0,
+      "contrastColor": "#000000"
+    },
+    {
+      "id": "e8ba094a-7a3d-4d1d-97a7-25255debad43",
+      "hex": "#D8FFAD",
+      "hsl": [89, 100, 84, 1],
+      "token": "green-180-for-light-theme",
+      "elements": 0,
+      "contrastColor": "#000000"
+    },
+    {
+      "id": "5be08038-43f0-41d1-9709-61868fe8fa13",
+      "hex": "#BFFF7A",
+      "hsl": [89, 100, 74, 1],
+      "token": "green-260-for-light-theme",
+      "elements": 0,
+      "contrastColor": "#000000"
+    },
+    {
+      "id": "bbc1eafb-a943-4b8e-b9b4-2efd969d9cc2",
+      "hex": "#A4FF42",
+      "hsl": [89, 100, 63, 1],
+      "token": "green-340-for-light-theme",
+      "elements": 0,
+      "contrastColor": "#000000"
+    },
+    {
+      "id": "48adbf0e-c9e3-41b8-9e80-4eba956eff06",
+      "hex": "#8BFF0F",
+      "hsl": [89, 100, 53, 1],
+      "token": "green-420-for-light-theme",
+      "elements": 0,
+      "contrastColor": "#000000"
+    },
+    {
+      "id": "418edba2-3adc-4d97-8c2a-682bae96f629",
+      "hex": "#6FD600",
+      "hsl": [89, 100, 42, 1],
+      "token": "green-500-for-light-theme",
+      "elements": 0,
+      "contrastColor": "#000000"
+    },
+    {
+      "id": "e4ba3c00-3578-4f86-ac01-ea07a34becb8",
+      "hex": "#5CB300",
+      "hsl": [89, 100, 35, 1],
+      "token": "green-580-for-light-theme",
+      "elements": 0,
+      "contrastColor": "#000000"
+    },
+    {
+      "id": "aa9497d7-a9cb-4efd-8803-7e13c1f72bd2",
+      "hex": "#478A00",
+      "hsl": [89, 100, 27, 1],
+      "token": "green-660-for-light-theme",
+      "elements": 0,
+      "contrastColor": "#000000"
+    },
+    {
+      "id": "2f7f4a96-729c-4db2-a818-76b260ca924d",
+      "hex": "#356600",
+      "hsl": [89, 100, 20, 1],
+      "token": "green-740-for-light-theme",
+      "elements": 0,
+      "contrastColor": "#FFFFFF"
+    },
+    {
+      "id": "20eae287-bdb3-4472-ac4b-1f806dc67a63",
+      "hex": "#203D00",
+      "hsl": [89, 100, 12, 1],
+      "token": "green-820-for-light-theme",
+      "elements": 0,
+      "contrastColor": "#FFFFFF"
+    },
+    {
+      "id": "4656d69d-0a2e-4907-b43e-e0206da04370",
+      "hex": "#0D1900",
+      "hsl": [89, 100, 5, 1],
+      "token": "green-900-for-light-theme",
+      "elements": 0,
+      "contrastColor": "#FFFFFF"
+    }
+  ]
 }
