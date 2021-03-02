@@ -1,6 +1,7 @@
-import { Color } from './origins/types';
-
-export interface ClosestColor extends Color {
+export interface ClosestColor {
+  name: string;
+  token: string;
+  hex: string;
   distance: number;
 }
 

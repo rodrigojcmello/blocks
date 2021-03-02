@@ -4,3 +4,6 @@ lib
 *.css.d.ts
 styled-components
 coverage
+
+packages/colors/src/name/origins/color-names-org/color-name-org.ts
+packages/colors/src/name/origins/pantone/pantone.ts

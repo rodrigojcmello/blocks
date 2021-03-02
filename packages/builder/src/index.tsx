@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import {
@@ -40,8 +41,7 @@ const Colors: FC = () => {
         fs.writeFile(
           file.filePaths[0],
           JSON.stringify({ colors: scale }),
-          (error: any) => {
-            if (error) throw error;
+          () => {
             console.log('Saved!');
             exec(`yarn prettier --write ${file.filePaths[0]}`);
           }
