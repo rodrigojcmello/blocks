@@ -1,13 +1,15 @@
 const articles = ['a', 'an', 'the'];
 const conjunctions = ['and', 'but', 'for', 'or'];
 const preposition = ['at', 'with', 'of', 'in'];
-const others = ['de', 'w/'];
+const abbreviations = ['w/'];
+const romanceLanguagesWords = ['de'];
 
 const exceptionWords = new Set([
   ...articles,
   ...conjunctions,
   ...preposition,
-  ...others,
+  ...abbreviations,
+  ...romanceLanguagesWords,
 ]);
 
 export function capitalize(text: string, title?: boolean): string {
@@ -15,7 +17,7 @@ export function capitalize(text: string, title?: boolean): string {
 
   if (title) {
     const word = lowerCase
-      .split(' ')
+      .split(/[\s|-]+/)
       .map((w) => capitalize(w))
       .join(' ');
 
