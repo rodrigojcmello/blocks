@@ -4,6 +4,7 @@ import crayola from './crayola/crayola';
 import html from './html/html';
 import colorNamesOrg from './color-names-org/color-name-org';
 import { formatColorTexts, writeColor } from './common';
+import { formatColorName } from '../utils';
 
 const colors = [...colorNamesOrg, ...html, ...crayola, ...pantone];
 
@@ -18,7 +19,7 @@ let repeated = 0;
 for (const color of colors) {
   if (colorsNoRepeated[color[0]]) {
     repeated += 1;
-    console.log(`exist ${color[0]}`);
+    console.log(`repeated ${color[0]}`);
   }
   // eslint-disable-next-line prefer-destructuring
   colorsNoRepeated[color[0]] = color[1];
@@ -27,7 +28,7 @@ for (const color of colors) {
 console.log(`repeated colors ${repeated}`);
 
 for (const color of Object.keys(colorsNoRepeated)) {
-  formatColorTexts(colorsNoRepeated[color], color);
+  formatColorTexts(formatColorName(colorsNoRepeated[color]), color);
 }
 
 writeColor('colors');

@@ -10,6 +10,10 @@ export function formatColorTexts(name: string, hex: string): void {
   const formattedToken = formatToken(name);
   if (formattedName && formattedToken) {
     names.push([hex.toUpperCase(), name]);
+  } else {
+    console.log(
+      `something is wrong with name [${formattedName}] ou token [${formattedToken}]`
+    );
   }
 }
 
