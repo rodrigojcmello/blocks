@@ -1,46 +1,68 @@
+import { Capitalize } from './types';
+
 const articles = ['a', 'an', 'the'];
 const conjunctions = ['and', 'but', 'for', 'or'];
 const preposition = ['at', 'with', 'of', 'in'];
 const abbreviations = ['w/'];
 const romanceLanguagesWords = ['de'];
 
-const exceptionWords = new Set([
+const exceptionWordsDefault = [
   ...articles,
   ...conjunctions,
   ...preposition,
   ...abbreviations,
   ...romanceLanguagesWords,
-]);
+];
 
-export function capitalize(text: string, title?: boolean): string {
-  const lowerCase = title ? text.toLowerCase() : text;
+export const capitalize: Capitalize = function (text, config) {
+  const justFirstLetter = config?.justFirstLetter ?? false;
+  const preserveCase = config?.preserveCase ?? false;
+  const cleanRepeated = config?.cleanRepeated ?? [' ', '-', '_'];
+  const separator = config?.separator ?? [' ', '-', '_'];
+  // const abbreviations = config?.abbreviations ?? [];
+  const exceptionWords = new Set(
+    config?.exceptionWords ?? exceptionWordsDefault
+  );
 
-  if (title) {
-    const word = lowerCase
-      .split(/[\s|-]+/)
-      .map((w) => capitalize(w))
-      .join(' ');
+  // Preserve Case
+  let word = preserveCase ? text : text.toLowerCase();
 
-    return word.charAt(0).toUpperCase() + word.slice(1);
+  // Remove repeated characters
+  for (const repeatedChar of cleanRepeated) {
+    word = word
+      // .toLowerCase()
+      .replace(new RegExp(`${repeatedChar}+`, 'gi'), repeatedChar)
+      .trim();
   }
-  if (exceptionWords.has(lowerCase.toLowerCase())) {
-    return lowerCase;
+
+  if (!justFirstLetter) {
+    if (separator.length > 0) {
+      for (const separatorElement of separator) {
+        word = word
+          .split(separatorElement)
+          .map((w) =>
+            capitalize(w, {
+              separator: [],
+              cleanRepeated: [],
+              preserveCase: false,
+            })
+          )
+          .join(separatorElement);
+      }
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }
+    if (exceptionWords.has(word.toLowerCase())) {
+      return word;
+    }
+    if (word.charAt(1) === "'" && word.length > 3) {
+      return word.slice(0, 3).toUpperCase() + word.slice(3);
+    }
   }
-  if (lowerCase.charAt(1) === "'" && lowerCase.length > 3) {
-    return lowerCase.slice(0, 3).toUpperCase() + lowerCase.slice(3);
-  }
-  return lowerCase.charAt(0).toUpperCase() + lowerCase.slice(1);
-}
+  return (word.charAt(0).toUpperCase() + word.slice(1)).trim();
+};
 
 export const formatColorName = function (colorName: string): string {
-  return capitalize(
-    colorName
-      .replace(/-+/g, '-')
-      .replace(/\s+/g, ' ')
-      .replace(/w\//gi, 'with')
-      .trim(),
-    true
-  );
+  return capitalize(colorName.replace(/w\//gi, 'with').trim());
 };
 
 export const formatToken = function (token: string): string {
