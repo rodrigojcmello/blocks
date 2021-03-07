@@ -54,7 +54,8 @@ describe('capitalize text', () => {
     expect(capitalize('hello_word')).toBe('Hello Word');
   });
   test('4', () => {
-    expect(capitalize('check-in and check-out')).toBe('Check-in and Check-out');
+    expect(capitalize('check-in and check-out')).toBe('Check in and Check out');
+    // expect(capitalize('check-in and check-out')).toBe('Check-in and Check-out');
   });
   test('4.1', () => {
     expect(capitalize('check-in')).toBe('Check in');

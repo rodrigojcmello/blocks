@@ -30,8 +30,39 @@ function execAll(string: string, regex: RegExp): RegExpExecArray[] | null {
 }
 
 const articles = ['a', 'an', 'the'];
-const conjunctions = ['and', 'but', 'for', 'or'];
-const preposition = ['at', 'with', 'of', 'in'];
+const conjunctions = ['for', 'and', 'nor', 'but', 'or', 'yet', 'so'];
+
+/**
+ * @see {@link https://dictionary.cambridge.org/grammar/british-grammar/prepositions}
+ */
+const preposition = [
+  'at',
+  'as',
+  'by',
+  'down',
+  'from',
+  'in',
+  'into',
+  /**
+   * like is ignored because it is not possible to differentiate if its use is
+   * as a preposition or verb
+   */
+  // 'link'
+  'near',
+  'of',
+  'off',
+  'on',
+  'onto',
+  'out',
+  'over',
+  'past',
+  'than',
+  'to',
+  'up',
+  'upon',
+  'via',
+  'with',
+];
 const abbreviations = ['w/'];
 const romanceLanguagesWords = ['de'];
 
@@ -42,6 +73,12 @@ const AlwaysLowerCase = [
   ...abbreviations,
   ...romanceLanguagesWords,
 ];
+
+/**
+ * @see {@link https://docs.microsoft.com/en-us/style-guide/capitalization}
+ * @param text
+ * @param config
+ */
 
 export const capitalize: Capitalize = function (text, config) {
   const firstWord = config?.firstWord ?? false;
