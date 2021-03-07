@@ -1,31 +1,54 @@
 import { capitalize } from './utils';
 
 describe('capitalize text', () => {
-  test('first letter', () => {
-    expect(capitalize('text')).toBe('Text');
-    expect(capitalize('text text')).toBe('Text text');
+  test('capitalize the first word of a sentence', () => {
+    expect(capitalize('The cat is sleeping.', { firstWord: true })).toBe(
+      'The cat is sleeping.'
+    );
+    expect(capitalize('where did I put that book?', { firstWord: true })).toBe(
+      'Where did I put that book?'
+    );
   });
 
   test('preserve case', () => {
     expect(capitalize('texT', { preserveCase: true })).toBe('TexT');
-    expect(capitalize('teXt tExT', { preserveCase: true })).toBe('TeXt TExT');
-  });
-
-  test('1.1', () => {
-    expect(capitalize('  --- ____ hello --  woRd -   __  ')).toBe('Hello Word');
-  });
-  test('1.1.1', () => {
-    expect(capitalize('  hiiiii  ', { cleanRepeated: ['i'] })).toBe('Hi');
-    expect(capitalize('  hIII  ', { cleanRepeated: ['i'] })).toBe('Hi');
-    expect(capitalize('  hHIIIIII  ', { cleanRepeated: ['h', 'i'] })).toBe(
-      'Hi'
+    expect(capitalize('teXt tExT text tEXT', { preserveCase: true })).toBe(
+      'TeXt TExT Text TEXT'
     );
   });
-  test('2', () => {
-    expect(capitalize('first name')).toBe('First Name');
+
+  test('clean repeated separators and replace all separators by space', () => {
+    expect(capitalize('  --- ____ hello --  woRd -   __  ')).toBe('Hello Word');
+    expect(capitalize('__hello-word  ')).toBe('Hello Word');
+  });
+
+  test('clean repeated separators', () => {
+    expect(
+      capitalize('  --- ____ hello --  woRd -   __  ', { separator: [' '] })
+    ).toBe('- _ Hello - Word - _');
+    expect(capitalize('__hello-word  ', { separator: [' '] })).toBe(
+      '_hello-word'
+    );
+    expect(capitalize('__ hello-word  ', { separator: [' '] })).toBe(
+      '_ Hello-word'
+    );
+  });
+
+  test('remove duplicate characters', () => {
+    expect(capitalize('__  --  hi  --  __')).toBe('Hi');
+    expect(capitalize('__  --  hiIi  --  __')).toBe('Hiii');
+    expect(capitalize('hiiiii', { removeDuplicate: ['i'] })).toBe('Hi');
+    expect(capitalize('hIII', { removeDuplicate: ['i'] })).toBe('Hi');
+    expect(capitalize('hHIIIIII   hi', { removeDuplicate: ['h', 'i'] })).toBe(
+      'Hi   Hi'
+    );
+    expect(
+      capitalize('hHIIIIII   hi', { removeDuplicate: ['h', 'i', ' '] })
+    ).toBe('Hi Hi');
   });
   test('3', () => {
-    expect(capitalize("I'm a hEro")).toBe("I'm a Hero");
+    expect(capitalize("i'm a hero")).toBe("I'm a Hero");
+    expect(capitalize("james o'brian")).toBe("James O'Brian");
   });
   test('3.1', () => {
     expect(capitalize('hello_word')).toBe('Hello Word');

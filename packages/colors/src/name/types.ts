@@ -16,7 +16,7 @@ export interface Capitalize {
       /**
        * @default false
        */
-      justFirstLetter?: boolean;
+      firstWord?: boolean;
 
       /**
        * If true, lower case will not be applied to the rest of the text
@@ -27,7 +27,7 @@ export interface Capitalize {
       /**
        * @default [' ', '_']
        */
-      cleanRepeated?: string[];
+      removeDuplicate?: string[];
 
       /**
        * @default ['-', '_']

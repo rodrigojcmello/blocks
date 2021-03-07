@@ -1,12 +1,41 @@
 import { Capitalize } from './types';
 
+function replaceAt(string: string, index: number, replacement: string): string {
+  if (index >= string.length) {
+    return string.valueOf();
+  }
+
+  return (
+    string.slice(0, Math.max(0, index)) +
+    replacement +
+    string.slice(Math.max(0, index + 1))
+  );
+}
+
+function execAll(string: string, regex: RegExp): RegExpExecArray[] | null {
+  if (!regex.global) {
+    console.error(
+      'RegExp must have the global flag to retrieve multiple results.'
+    );
+  }
+  const results = [];
+  let match: RegExpExecArray | null;
+  // eslint-disable-next-line no-cond-assign
+  while ((match = regex.exec(string))) {
+    results.push(match);
+  }
+  // eslint-disable-next-line unicorn/no-null
+  if (results.length === 0) return null;
+  return results;
+}
+
 const articles = ['a', 'an', 'the'];
 const conjunctions = ['and', 'but', 'for', 'or'];
 const preposition = ['at', 'with', 'of', 'in'];
 const abbreviations = ['w/'];
 const romanceLanguagesWords = ['de'];
 
-const exceptionWordsDefault = [
+const AlwaysLowerCase = [
   ...articles,
   ...conjunctions,
   ...preposition,
@@ -15,27 +44,36 @@ const exceptionWordsDefault = [
 ];
 
 export const capitalize: Capitalize = function (text, config) {
-  const justFirstLetter = config?.justFirstLetter ?? false;
+  const firstWord = config?.firstWord ?? false;
   const preserveCase = config?.preserveCase ?? false;
-  const cleanRepeated = config?.cleanRepeated ?? [' ', '-', '_'];
+  const removeDuplicate = config?.removeDuplicate ?? [' ', '-', '_'];
   const separator = config?.separator ?? [' ', '-', '_'];
   // const abbreviations = config?.abbreviations ?? [];
-  const exceptionWords = new Set(
-    config?.exceptionWords ?? exceptionWordsDefault
-  );
+  const exceptionWords = new Set(config?.exceptionWords ?? AlwaysLowerCase);
+
+  let word: string;
 
   // Preserve Case
-  let word = preserveCase ? text : text.toLowerCase();
+  if (preserveCase) {
+    word = text;
+  } else {
+    const preserveI = execAll(text, /I[\s']/g);
+    word = text.toLowerCase();
+    if (preserveI) {
+      for (const { index } of preserveI) {
+        word = replaceAt(word, index, word[index].toUpperCase());
+      }
+    }
+  }
 
   // Remove repeated characters
-  for (const repeatedChar of cleanRepeated) {
+  for (const repeatedChar of removeDuplicate) {
     word = word
-      // .toLowerCase()
       .replace(new RegExp(`${repeatedChar}+`, 'gi'), repeatedChar)
       .trim();
   }
 
-  if (!justFirstLetter) {
+  if (!firstWord) {
     if (separator.length > 0) {
       for (const separatorElement of separator) {
         word = word
@@ -43,18 +81,18 @@ export const capitalize: Capitalize = function (text, config) {
           .map((w) =>
             capitalize(w, {
               separator: [],
-              cleanRepeated: [],
-              preserveCase: false,
+              removeDuplicate: [],
+              preserveCase: true,
             })
           )
-          .join(separatorElement);
+          .join(' ');
       }
-      return word.charAt(0).toUpperCase() + word.slice(1);
+      return (word.charAt(0).toUpperCase() + word.slice(1)).trim();
     }
     if (exceptionWords.has(word.toLowerCase())) {
       return word;
     }
-    if (word.charAt(1) === "'" && word.length > 3) {
+    if (/^[a-z]'[a-z]{2}/i.test(word)) {
       return word.slice(0, 3).toUpperCase() + word.slice(3);
     }
   }
