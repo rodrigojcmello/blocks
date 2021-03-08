@@ -112,6 +112,11 @@ export const capitalize: Capitalize = function (text, config) {
 
   if (!firstWord) {
     if (separator.length > 0) {
+      word = word
+        .replace(new RegExp(`${separator.join('|')}+`, 'gi'), ' ')
+        .replace(/\s+/gi, ' ')
+        .trim();
+
       const separatorPosition = {};
       for (const separatorElement of separator) {
         // @ts-ignore
@@ -120,11 +125,6 @@ export const capitalize: Capitalize = function (text, config) {
           new RegExp(`${separatorElement}`, 'g')
         );
       }
-
-      word = word
-        .replace(new RegExp(`${separator.join('|')}+`, 'gi'), ' ')
-        .replace(/\s+/gi, ' ')
-        .trim();
 
       word = word
         .split(' ')
