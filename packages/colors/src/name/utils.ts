@@ -47,7 +47,7 @@ const preposition = [
    * like is ignored because it is not possible to differentiate if its use is
    * as a preposition or verb
    */
-  // 'link'
+  // 'like'
   'near',
   'of',
   'off',
@@ -112,18 +112,31 @@ export const capitalize: Capitalize = function (text, config) {
 
   if (!firstWord) {
     if (separator.length > 0) {
+      const separatorPosition = {};
       for (const separatorElement of separator) {
-        word = word
-          .split(separatorElement)
-          .map((w) =>
-            capitalize(w, {
-              separator: [],
-              removeDuplicate: [],
-              preserveCase: true,
-            })
-          )
-          .join(' ');
+        // @ts-ignore
+        separatorPosition[separatorElement] = execAll(
+          word,
+          new RegExp(`${separatorElement}`, 'g')
+        );
       }
+
+      word = word
+        .replace(new RegExp(`${separator.join('|')}+`, 'gi'), ' ')
+        .replace(/\s+/gi, ' ')
+        .trim();
+
+      word = word
+        .split(' ')
+        .map((w) =>
+          capitalize(w, {
+            separator: [],
+            removeDuplicate: [],
+            preserveCase: true,
+          })
+        )
+        .join(' ');
+
       return (word.charAt(0).toUpperCase() + word.slice(1)).trim();
     }
     if (exceptionWords.has(word.toLowerCase())) {
