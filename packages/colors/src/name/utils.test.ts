@@ -24,12 +24,14 @@ describe('capitalize text', () => {
 
   test('clean repeated separators', () => {
     expect(
-      capitalize('  --- ____ hello --  woRd -   __  ', { separator: [' '] })
+      capitalize('  --- ____ hello --  woRd -   __  ', {
+        wordSeparators: [' '],
+      })
     ).toBe('- _ Hello - Word - _');
-    expect(capitalize('__hello-word  ', { separator: [' '] })).toBe(
+    expect(capitalize('__hello-word  ', { wordSeparators: [' '] })).toBe(
       '_hello-word'
     );
-    expect(capitalize('__ hello-word  ', { separator: [' '] })).toBe(
+    expect(capitalize('__ hello-word  ', { wordSeparators: [' '] })).toBe(
       '_ Hello-word'
     );
   });
@@ -39,8 +41,8 @@ describe('capitalize text', () => {
     expect(capitalize('__  --  hiIi  --  __')).toBe('Hiii');
     expect(capitalize('hiiiii', { removeDuplicate: ['i'] })).toBe('Hi');
     expect(capitalize('hIII', { removeDuplicate: ['i'] })).toBe('Hi');
-    expect(capitalize('hHIIIIII   hi', { removeDuplicate: ['h', 'i'] })).toBe(
-      'Hi   Hi'
+    expect(capitalize('hHIIIIII--   hi', { removeDuplicate: ['h', 'i'] })).toBe(
+      'Hi Hi'
     );
     expect(
       capitalize('hHIIIIII   hi', { removeDuplicate: ['h', 'i', ' '] })
@@ -67,5 +69,10 @@ describe('capitalize text', () => {
     expect(capitalize('rodrigo josé carvalho de mello')).toBe(
       'Rodrigo José Carvalho de Mello'
     );
+  });
+  test('Preserve word separator', () => {
+    expect(capitalize('check - in')).toBe('Check in');
+    expect(capitalize('check-in')).toBe('Check-in');
+    expect(capitalize('check_check')).toBe('Check_Check');
   });
 });

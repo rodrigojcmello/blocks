@@ -30,9 +30,14 @@ export interface Capitalize {
       removeDuplicate?: string[];
 
       /**
-       * @default ['-', '_']
+       * @default ' '
        */
-      replaceBySpace?: string[];
+      replaceConsecutiveWordSeparatorsBySpace?: boolean;
+
+      // /**
+      //  * @default ['-', '_']
+      //  */
+      // replaceBySpace?: string[];
 
       /**
        * @default ['the', 'a', 'an']
@@ -42,7 +47,7 @@ export interface Capitalize {
       /**
        * @default [' ', '-', '_']
        */
-      separator?: string[];
+      wordSeparators?: string[];
 
       abbreviations?:
         | [[abbreviation: string, completeWord: string]]

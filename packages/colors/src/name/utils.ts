@@ -84,7 +84,9 @@ export const capitalize: Capitalize = function (text, config) {
   const firstWord = config?.firstWord ?? false;
   const preserveCase = config?.preserveCase ?? false;
   const removeDuplicate = config?.removeDuplicate ?? [' ', '-', '_'];
-  const separator = config?.separator ?? [' ', '-', '_'];
+  const wordSeparators = config?.wordSeparators ?? [' ', '-', '_'];
+  const defaultWordSeparator =
+    config?.replaceConsecutiveWordSeparatorsBySpace ?? true;
   // const abbreviations = config?.abbreviations ?? [];
   const exceptionWords = new Set(config?.exceptionWords ?? AlwaysLowerCase);
 
@@ -111,14 +113,20 @@ export const capitalize: Capitalize = function (text, config) {
   }
 
   if (!firstWord) {
-    if (separator.length > 0) {
-      word = word
-        .replace(new RegExp(`${separator.join('|')}+`, 'gi'), ' ')
-        .replace(/\s+/gi, ' ')
-        .trim();
+    if (wordSeparators.length > 0) {
+      // Replaces separators to space
+      if (defaultWordSeparator) {
+        word = word.replace(
+          new RegExp(`${wordSeparators.join('|')}`, 'gi'),
+          ' '
+        );
+        word = word.replace(/\s+/gi, ' ');
+      }
+
+      // Remove duplicate spaces
 
       const separatorPosition = {};
-      for (const separatorElement of separator) {
+      for (const separatorElement of wordSeparators) {
         // @ts-ignore
         separatorPosition[separatorElement] = execAll(
           word,
@@ -130,7 +138,7 @@ export const capitalize: Capitalize = function (text, config) {
         .split(' ')
         .map((w) =>
           capitalize(w, {
-            separator: [],
+            wordSeparators: [],
             removeDuplicate: [],
             preserveCase: true,
           })
