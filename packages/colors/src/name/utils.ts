@@ -29,6 +29,8 @@ function execAll(string: string, regex: RegExp): RegExpExecArray[] | null {
   return results;
 }
 
+const prefixHyphen = ['all', 'self', 'pre', 'ex'];
+
 const articles = ['a', 'an', 'the'];
 const conjunctions = ['for', 'and', 'nor', 'but', 'or', 'yet', 'so'];
 
@@ -83,6 +85,7 @@ const AlwaysLowerCase = [
 export const capitalize: Capitalize = function (text, config) {
   const firstWord = config?.firstWord ?? false;
   const preserveCase = config?.preserveCase ?? false;
+  const preserveHyphen = config?.preserveHyphen ?? true;
   const removeDuplicate = config?.removeDuplicate ?? [' ', '-', '_'];
   const wordSeparators = config?.wordSeparators ?? [' ', '-', '_'];
   const defaultWordSeparator =
@@ -105,7 +108,7 @@ export const capitalize: Capitalize = function (text, config) {
     }
   }
 
-  // Remove repeated characters
+  // Remove duplicate characters
   for (const repeatedChar of removeDuplicate) {
     word = word
       .replace(new RegExp(`${repeatedChar}+`, 'gi'), repeatedChar)
@@ -116,26 +119,29 @@ export const capitalize: Capitalize = function (text, config) {
     if (wordSeparators.length > 0) {
       // Replaces separators to space
       if (defaultWordSeparator) {
-        word = word.replace(
-          new RegExp(`${wordSeparators.join('|')}`, 'gi'),
-          ' '
-        );
-        word = word.replace(/\s+/gi, ' ');
+        word = word.replace(new RegExp(`[${['_'].join('|')}]`, 'gi'), ' ');
       }
+
+      word = preserveHyphen
+        ? word.replace(/(\s-|-\s)+/g, ' ').replace(/(\s-|-\s)+/g, ' ')
+        : word.replace(/-+/g, ' ');
+
+      word = word.replace(/\s+/gi, ' ');
 
       // Remove duplicate spaces
 
-      const separatorPosition = {};
-      for (const separatorElement of wordSeparators) {
-        // @ts-ignore
-        separatorPosition[separatorElement] = execAll(
-          word,
-          new RegExp(`${separatorElement}`, 'g')
-        );
-      }
+      const hyphenPosition = execAll(word, new RegExp('-', 'g'));
+      // const separatorPosition = {};
+      // for (const separatorElement of wordSeparators) {
+      //   // @ts-ignore
+      //   separatorPosition[separatorElement] = execAll(
+      //     word,
+      //     new RegExp(`${separatorElement}`, 'g')
+      //   );
+      // }
 
       word = word
-        .split(' ')
+        .split(/\s|-/)
         .map((w) =>
           capitalize(w, {
             wordSeparators: [],
@@ -144,6 +150,12 @@ export const capitalize: Capitalize = function (text, config) {
           })
         )
         .join(' ');
+
+      if (hyphenPosition) {
+        for (const hyphenPositionElement of hyphenPosition) {
+          word = replaceAt(word, hyphenPositionElement.index, '-');
+        }
+      }
 
       return (word.charAt(0).toUpperCase() + word.slice(1)).trim();
     }

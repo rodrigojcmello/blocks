@@ -19,10 +19,14 @@ export interface Capitalize {
       firstWord?: boolean;
 
       /**
-       * If true, lower case will not be applied to the rest of the text
        * @default false
        */
       preserveCase?: boolean;
+
+      /**
+       * @default false
+       */
+      preserveHyphen?: boolean;
 
       /**
        * @default [' ', '_']
@@ -33,11 +37,6 @@ export interface Capitalize {
        * @default ' '
        */
       replaceConsecutiveWordSeparatorsBySpace?: boolean;
-
-      // /**
-      //  * @default ['-', '_']
-      //  */
-      // replaceBySpace?: string[];
 
       /**
        * @default ['the', 'a', 'an']
