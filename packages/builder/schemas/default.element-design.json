@@ -1,0 +1,51 @@
+{
+  "version": "1.0.0",
+  "name": "Default",
+  "components": {
+    "button": {
+      "elements": {
+        "container": {
+          "base": {
+            "default": {},
+            "modifiers": {
+              "state": {
+                "rest": {},
+                "hover": {},
+                "focus": {},
+                "pressed": {},
+                "visited": {}
+              },
+              "sizes": {
+                "small": {},
+                "large": {}
+              }
+            }
+          },
+          "variant": {
+            "default": {
+              "success": {
+                "style": {
+                  "rest": {},
+                  "hover": {},
+                  "focus": {},
+                  "pressed": {},
+                  "visited": {}
+                },
+                "sizes": {
+                  "small": {},
+                  "large": {}
+                }
+              },
+              "warning": {},
+              "danger": {},
+              "disabled": {}
+            },
+            "outline": {},
+            "link": {}
+          }
+        },
+        "text": {}
+      }
+    }
+  }
+}
