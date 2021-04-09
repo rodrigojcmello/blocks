@@ -106,6 +106,11 @@ module.exports = {
         ],
 
         /**
+         * this rule is disabled because of the type inference in typescript
+         */
+        'consistent-return': 'off',
+
+        /**
          * The idea here is to keep the kebab case as standard as recommended by
          * Unicorn, except for React components that need to be pascal case
          * @see {@link https://github.com/airbnb/javascript/tree/master/react#naming }
