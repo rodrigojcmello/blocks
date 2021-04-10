@@ -189,6 +189,7 @@ module.exports = {
         ],
 
         '@typescript-eslint/no-var-requires': 'off',
+        'unicorn/no-useless-undefined': 'off',
 
         //----------------------------------------------------------------------
         // RECOMMENDATIONS
