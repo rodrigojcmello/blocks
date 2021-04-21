@@ -4,6 +4,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const Style9Plugin = require('style9/webpack');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (environment) => {
   const production = environment?.NODE_ENV === 'production';
@@ -83,6 +85,7 @@ module.exports = (environment) => {
                 cacheDirectory: true,
               },
             },
+            { loader: Style9Plugin.loader },
           ],
         },
         {

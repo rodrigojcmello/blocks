@@ -106,7 +106,7 @@ module.exports = {
         ],
 
         /**
-         * this rule is disabled because of the type inference in typescript
+         * this rule is disabled because of the type inference in Typescript
          */
         'consistent-return': 'off',
 
@@ -136,7 +136,7 @@ module.exports = {
         'unicorn/prevent-abbreviations': [
           'error',
           {
-            whitelist: {
+            allowList: {
               props: true,
               Props: true,
             },
@@ -167,10 +167,15 @@ module.exports = {
         'react/jsx-props-no-spreading': 'off',
 
         /**
+         * With version 17 of React, importing it is optional
          * @see {@link https://reactjs.org/blog/2020/10/20/react-v17.html#new-jsx-transform}
          */
         'react/react-in-jsx-scope': 'off',
 
+        /**
+         * this rule never worked well for me, it ends up more disturbing than
+         * helping, so it is disabled.
+         */
         'react-hooks/exhaustive-deps': 'off',
 
         //----------------------------------------------------------------------
