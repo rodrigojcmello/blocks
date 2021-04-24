@@ -213,6 +213,7 @@ module.exports = {
         'no-restricted-syntax': 'off',
         '@typescript-eslint/ban-ts-comment': 'off',
         'import/prefer-default-export': 'off',
+        'no-plusplus': 'off',
       },
     },
   ],

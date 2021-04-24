@@ -10,47 +10,57 @@ import {
   validateHexColor,
   removeHexPrefix,
 } from '@element-design/colors';
-import { Dialog } from 'electron';
+// import { Dialog } from 'electron';
+// import style9 from 'style9';
 import ColorBox, { Color } from './components/ColorBox';
 import SimpleText from './components/TextField/SimpleText';
 import { ColorsGrid, FormGrid } from './components/Grids';
 import IconText from './components/TextField/IconText';
 import HueBox from './components/HueBox';
 
-const { exec } = window.require('child_process');
-const electron = window.require('electron');
-const fs = window.require('fs');
-const { remote } = electron;
-const { dialog } = remote;
+// const styles = style9.create({
+//   blue: {
+//     color: 'blue',
+//   },
+//   red: {
+//     color: 'red',
+//   },
+// });
+
+// const { exec } = window.require('child_process');
+// const electron = window.require('electron');
+// const fs = window.require('fs');
+// const { remote } = electron;
+// const { dialog } = remote;
 
 const Colors: FC = () => {
   const [colorName, setColorName] = useState('');
   const [hexColor, setHexColor] = useState('#6DD400');
   const [scale, setScale] = useState<Color[]>([]);
 
-  const openModal = (): void => {
-    (dialog as Dialog)
-      .showOpenDialog({
-        properties: ['openFile', 'openDirectory'],
-      })
-      .then((file) => {
-        console.log(file.canceled);
-        console.log(file.filePaths);
-        console.log(scale);
-
-        fs.writeFile(
-          file.filePaths[0],
-          JSON.stringify({ colors: scale }),
-          () => {
-            console.log('Saved!');
-            exec(`yarn prettier --write ${file.filePaths[0]}`);
-          }
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const openModal = (): void => {
+  // dialog
+  //   .showOpenDialog({
+  //     properties: ['openFile', 'openDirectory'],
+  //   })
+  //   .then((file) => {
+  //     console.log(file.canceled);
+  //     console.log(file.filePaths);
+  //     console.log(scale);
+  //
+  //     fs.writeFile(
+  //       file.filePaths[0],
+  //       JSON.stringify({ colors: scale }),
+  //       () => {
+  //         console.log('Saved!');
+  //         exec(`yarn prettier --write ${file.filePaths[0]}`);
+  //       }
+  //     );
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
+  // };
 
   useEffect(() => {
     if (validateHexColor(hexColor)) {
@@ -138,9 +148,7 @@ const Colors: FC = () => {
 
   return (
     <div>
-      <button type="button" onClick={openModal}>
-        click
-      </button>
+      <button type="button">click</button>
       {/* <HueBox backgroundSize={1200} backgroundPosition={0} width={1200} /> */}
       <div
         style={{

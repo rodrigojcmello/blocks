@@ -4,8 +4,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-const Style9Plugin = require('style9/webpack');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const Style9Plugin = require('style9/webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (environment) => {
   const production = environment?.NODE_ENV === 'production';
@@ -46,6 +46,9 @@ module.exports = (environment) => {
         },
       }),
 
+      // new Style9Plugin(),
+      new MiniCssExtractPlugin(),
+
       // Clean build folder
       production && new CleanWebpackPlugin(),
 
@@ -59,11 +62,24 @@ module.exports = (environment) => {
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
     },
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          styles: {
+            name: 'styles',
+            type: 'css/mini-extract',
+            chunks: 'all',
+            enforce: true,
+          },
+        },
+      },
+    },
     module: {
       rules: [
         {
           test: /\.([jt])sx?$/,
           use: [
+            // Style9Plugin.loader,
             {
               loader: 'babel-loader',
               options: {
@@ -85,8 +101,11 @@ module.exports = (environment) => {
                 cacheDirectory: true,
               },
             },
-            { loader: Style9Plugin.loader },
           ],
+        },
+        {
+          test: /\.css$/i,
+          use: [MiniCssExtractPlugin.loader, 'css-loader'],
         },
         {
           test: /\.(png|jpe?g|gif|woff2?|eot|otf|webp)$/i,
