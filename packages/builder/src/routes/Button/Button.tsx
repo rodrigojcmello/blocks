@@ -51,6 +51,10 @@ const minimalHash = (global: GlobalUniqueStyle) => {
   return newX;
 };
 
+function camelCaseToDash(myString: string) {
+  return myString.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
 const uniqueStyle = (styles: UniqueStyleObject) => {
   console.log({ styles });
   const x: GlobalUniqueStyle = {};
@@ -72,35 +76,43 @@ const uniqueStyle = (styles: UniqueStyleObject) => {
   const min = minimalHash(x);
   console.log({ min });
   const newNewElement: NewElement = {};
+  const newX: GlobalUniqueStyle = {};
 
   for (const element of Object.keys(newElement)) {
     newNewElement[element] = [];
     for (const className of newElement[element]) {
       newNewElement[element].push(min[className]);
+      newX[min[className]] = x[className];
     }
   }
 
-  console.log({ newNewElement, x });
+  console.log({ newNewElement, x, newX });
 
-  //   const style = document.createElement('style');
-  //   style.innerHTML = '.cssClass { color: blue; }';
-  //   document.querySelectorAll('head')[0].append(style);
+  const stringStyle = Object.keys(newX)
+    .map((className) => {
+      return `.${className} { ${camelCaseToDash(
+        Object.keys(newX[className])[0]
+      )}: ${newX[className][Object.keys(newX[className])[0]]} }`;
+    })
+    .join(' ');
+
+  console.log({ stringStyle });
+
+  const style = document.createElement('style');
+  // style.innerHTML = '.cssClass { color: blue; }';
+  style.innerHTML = stringStyle;
+  document.querySelectorAll('head')[0].append(style);
 
   return newNewElement;
 };
 
 const Button: FC = () => {
-  // useEffect(() => {
-  //   const style = document.createElement('style');
-  //   style.innerHTML = '.cssClass { color: blue; }';
-  //   document.querySelectorAll('head')[0].append(style);
-  // }, []);
-
   const x = useMemo(
     () =>
       uniqueStyle({
         container: {
           backgroundColor: 'blue',
+          fontSize: '20px',
           color: 'white',
           // status: {
           //   warning: {
@@ -111,6 +123,7 @@ const Button: FC = () => {
         },
         label: {
           color: 'white',
+          fontSize: '24px',
           backgroundColor: 'red',
         },
       }),
