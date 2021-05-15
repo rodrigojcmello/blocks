@@ -55,7 +55,7 @@ function camelCaseToDash(myString: string) {
   return myString.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
-const uniqueStyle = (styles: UniqueStyleObject) => {
+const uniqueStyle = (styles: UniqueStyleObject): NewElement => {
   console.log({ styles });
   const x: GlobalUniqueStyle = {};
   const newElement: NewElement = {};
@@ -133,7 +133,7 @@ const Button: FC = () => {
   console.log({ x });
 
   return (
-    <button type="button" className={x.container.join(' ')}>
+    <button type="button" className={x}>
       <div className={x.label.join(' ')}>button</div>
     </button>
   );
